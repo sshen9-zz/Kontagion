@@ -11,7 +11,7 @@ class Actor: public GraphObject
 public:
     Actor(int imageID, int startX, int startY, Direction startDirection, int depth, int hp, StudentWorld* ptr);
     virtual ~Actor();
-    virtual void doSomething() = 0;
+    virtual void doSomething();
     bool isDead() const;
     void setDead();
     int getHP() const;
@@ -29,7 +29,6 @@ class Dirt: public Actor
 public:
     Dirt(int startX, int startY, StudentWorld* ptr);
     virtual ~Dirt();
-    virtual void doSomething();
     
 private:
 };
@@ -45,11 +44,24 @@ private:
     int m_flameCount;
 };
 
+//class Flame: public Actor
+//{
+//public:
+//    Flame(int startX, int startY, StudentWorld* ptr);
+//private:
+//};
+
+class Spray: public Actor
+{
+public:
+    Spray(int startX, int startY, Direction startDirection, StudentWorld* ptr);
+private:
+};
+
 class Food: public Actor
 {
 public:
     Food(int startX, int startY, StudentWorld* ptr);
-    virtual void doSomething();
 private:
 };
 #endif // ACTOR_H_

@@ -5,11 +5,12 @@
 // Students:  Add code to this file, Actor.h, StudentWorld.h, and StudentWorld.cpp
 
 //ACTOR CLASS
-Actor::Actor(int imageID, int startX, int startY, Direction startDirection, int depth, int hp)
+Actor::Actor(int imageID, int startX, int startY, Direction startDirection, int depth, int hp, StudentWorld* ptr)
 :GraphObject(imageID, startX, startY, startDirection, depth)
 {
     m_HP = hp;
     m_isAlive = true;
+    m_worldPtr = ptr;
 }
 
 Actor::~Actor(){
@@ -36,8 +37,8 @@ void Actor::setHP(int hp){
 //DIRT
 //
 
-Dirt::Dirt(int startX, int startY)
-:Actor(IID_DIRT, startX, startY, 90, 1, 0)
+Dirt::Dirt(int startX, int startY, StudentWorld* ptr)
+:Actor(IID_DIRT, startX, startY, 0, 1, 0, ptr)
 {
     
 }
@@ -50,19 +51,30 @@ bool Dirt::doSomething(){
     return true;
 }
 
-Socrates::Socrates()
-:Actor(IID_PLAYER, 0, 128, 0, 0, 100)
+Socrates::Socrates(StudentWorld* ptr)
+:Actor(IID_PLAYER, 0, 128, 0, 0, 100, ptr)
 {
     m_sprayCount = 20;
     m_flameCount = 5;
+}
+
+bool Socrates::doSomething(){
+    if(!isAlive()){
+        return false;
+    }
+    return true;
+}
+
+Socrates::~Socrates(){
+    ;
 }
 
 
 //FOOD
 //
 
-Food::Food(int startX, int startY)
-:Actor(IID_FOOD, startX, startY, 90, 1, 0)
+Food::Food(int startX, int startY, StudentWorld* ptr)
+:Actor(IID_FOOD, startX, startY, 90, 1, 0, ptr)
 {
     
 }

@@ -9,7 +9,7 @@ Actor::Actor(int imageID, int startX, int startY, Direction startDirection, int 
 :GraphObject(imageID, startX, startY, startDirection, depth)
 {
     m_HP = hp;
-    m_isAlive = true;
+    m_dead = false;
     m_worldPtr = ptr;
 }
 
@@ -17,15 +17,15 @@ Actor::~Actor(){
     ;
 }
 
-bool Actor::isAlive(){
-    return m_isAlive;
+bool Actor::isDead() const{
+    return m_dead;
 }
 
 void Actor::setDead(){
-    m_isAlive = false;
+    m_dead = true;
 }
 
-int Actor::getHP(){
+int Actor::getHP() const{
     return m_HP;
 }
 
@@ -33,6 +33,9 @@ void Actor::setHP(int hp){
     m_HP = hp;
 }
 
+StudentWorld* Actor::getWorld() const{
+    return m_worldPtr;
+}
 
 //DIRT
 //
@@ -47,8 +50,8 @@ Dirt::~Dirt(){
     ;
 }
 
-bool Dirt::doSomething(){
-    return true;
+void Dirt::doSomething(){
+    return;
 }
 
 Socrates::Socrates(StudentWorld* ptr)
@@ -58,11 +61,11 @@ Socrates::Socrates(StudentWorld* ptr)
     m_flameCount = 5;
 }
 
-bool Socrates::doSomething(){
-    if(!isAlive()){
-        return false;
+void Socrates::doSomething(){
+    if(isDead()){
+        return;
     }
-    return true;
+    return;
 }
 
 Socrates::~Socrates(){
@@ -73,12 +76,16 @@ Socrates::~Socrates(){
 //FOOD
 //
 
+
 Food::Food(int startX, int startY, StudentWorld* ptr)
 :Actor(IID_FOOD, startX, startY, 90, 1, 0, ptr)
 {
     
 }
 
-bool Food::doSomething(){
-    return true;
+
+void Food::doSomething(){
+    return;
 }
+
+

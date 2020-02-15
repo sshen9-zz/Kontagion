@@ -19,6 +19,7 @@ StudentWorld::StudentWorld(string assetPath)
 int StudentWorld::init()
 {
     m_playerPtr = new Socrates(this);
+    li.push_back(new Dirt(VIEW_WIDTH/2, VIEW_HEIGHT/2, this));
     return GWSTATUS_CONTINUE_GAME;
 }
 

@@ -11,14 +11,15 @@ class Actor: public GraphObject
 public:
     Actor(int imageID, int startX, int startY, Direction startDirection, int depth, int hp, StudentWorld* ptr);
     virtual ~Actor();
-    virtual bool doSomething() = 0;
-    bool isAlive();
+    virtual void doSomething() = 0;
+    bool isDead() const;
     void setDead();
-    int getHP();
+    int getHP() const;
     void setHP(int hp);
+    StudentWorld* getWorld() const;
     
 private:
-    bool m_isAlive;
+    bool m_dead;
     int m_HP;
     StudentWorld* m_worldPtr;
 };
@@ -28,7 +29,7 @@ class Dirt: public Actor
 public:
     Dirt(int startX, int startY, StudentWorld* ptr);
     virtual ~Dirt();
-    virtual bool doSomething();
+    virtual void doSomething();
     
 private:
 };
@@ -38,7 +39,7 @@ class Socrates: public Actor
 public:
     Socrates(StudentWorld* ptr);
     virtual ~Socrates();
-    virtual bool doSomething();
+    virtual void doSomething();
 private:
     int m_sprayCount;
     int m_flameCount;
@@ -48,7 +49,7 @@ class Food: public Actor
 {
 public:
     Food(int startX, int startY, StudentWorld* ptr);
-    virtual bool doSomething();
+    virtual void doSomething();
 private:
 };
 #endif // ACTOR_H_

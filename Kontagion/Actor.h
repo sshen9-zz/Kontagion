@@ -9,13 +9,11 @@ class StudentWorld;
 class Actor: public GraphObject
 {
 public:
-    Actor(int imageID, int startX, int startY, Direction startDirection, int depth, int hp, StudentWorld* ptr);
+    Actor(int imageID, int startX, int startY, Direction startDirection, int depth, StudentWorld* ptr);
     virtual ~Actor();
     virtual void doSomething();
     bool isDead() const;
     void setDead();
-    int getHP() const;
-    void setHP(int hp);
     StudentWorld* getWorld() const;
     
 private:
@@ -44,24 +42,32 @@ private:
     int m_flameCount;
 };
 
-//class Flame: public Actor
-//{
-//public:
-//    Flame(int startX, int startY, StudentWorld* ptr);
-//private:
-//};
+class Projectile: public Actor
+{
+public:
+    Projectile(int imageID, int startX, int startY, Direction startDirection, int depth, StudentWorld* ptr, int travelDistance);
+    int getMaxTravel() const;
+    int getDist() const;
+    void increaseDist(int dist);
+    virtual void doSomething();
+private:
+    int m_maxTravel;
+    int m_distTraveled;
+    Direction m_direction;
+};
 
-class Spray: public Actor
+class Flame: public Projectile
+{
+public:
+    Flame(int startX, int startY, Direction startDirection, StudentWorld* ptr);
+private:
+};
+
+class Spray: public Projectile
 {
 public:
     Spray(int startX, int startY, Direction startDirection, StudentWorld* ptr);
 private:
 };
 
-class Food: public Actor
-{
-public:
-    Food(int startX, int startY, StudentWorld* ptr);
-private:
-};
 #endif // ACTOR_H_

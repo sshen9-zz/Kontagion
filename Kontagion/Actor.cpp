@@ -6,10 +6,9 @@
 // Students:  Add code to this file, Actor.h, StudentWorld.h, and StudentWorld.cpp
 
 //ACTOR CLASS
-Actor::Actor(int imageID, int startX, int startY, Direction startDirection, int depth, int hp, StudentWorld* ptr)
+Actor::Actor(int imageID, int startX, int startY, Direction startDirection, int depth, StudentWorld* ptr)
 :GraphObject(imageID, startX, startY, startDirection, depth)
 {
-    m_HP = hp;
     m_dead = false;
     m_worldPtr = ptr;
 }
@@ -30,14 +29,6 @@ void Actor::setDead(){
     m_dead = true;
 }
 
-int Actor::getHP() const{
-    return m_HP;
-}
-
-void Actor::setHP(int hp){
-    m_HP = hp;
-}
-
 StudentWorld* Actor::getWorld() const{
     return m_worldPtr;
 }
@@ -46,7 +37,7 @@ StudentWorld* Actor::getWorld() const{
 //
 
 Dirt::Dirt(int startX, int startY, StudentWorld* ptr)
-:Actor(IID_DIRT, startX, startY, 0, 1, 0, ptr)
+:Actor(IID_DIRT, startX, startY, 0, 1, ptr)
 {
     
 }
@@ -57,7 +48,7 @@ Dirt::~Dirt(){
 
 
 Socrates::Socrates(StudentWorld* ptr)
-:Actor(IID_PLAYER, 0, 128, 0, 0, 100, ptr)
+:Actor(IID_PLAYER, 0, 128, 0, 0, ptr)
 {
     m_sprayCount = 20;
     m_flameCount = 5;
@@ -81,21 +72,22 @@ void Socrates::doSomething(){
                 setDirection(getDirection()-5);
                 moveTo(128*cos((getDirection()+180)*1.0 / 360 * 2 * PI)+128, 128*sin((getDirection()+180)*1.0 / 360 * 2 * PI)+128);
                 break;
-//            case KEY_PRESS_ENTER:
-//                //flamethrower
-//                if(m_flameCount>0){
-//                    //add 16 flame objects
+            case KEY_PRESS_ENTER:
+                //flamethrower
+                if(m_flameCount>0){
+                    //add 16 flame objects
+                    getWorld()->addFlames(getX(), getY(), getDirection());
 //                    m_flameCount-=1;
-//                    //playsound
-//                }
-//                break;
-//            case KEY_PRESS_SPACE:
-//                if(m_sprayCount>0){
-//                    //add spray object
-//                    m_sprayCount-=1;
-//                    //playsound
-//                }
-//                break;
+                    //playsound
+                }
+                break;
+            case KEY_PRESS_SPACE:
+                if(m_sprayCount>0){
+                    getWorld()->addSpray(getX(), getY(), getDirection());
+                    m_sprayCount-=1;
+                    //playsound
+                }
+                break;
             default:
                 break;
         }
@@ -112,29 +104,54 @@ Socrates::~Socrates(){
     ;
 }
 
+Projectile::Projectile(int imageID, int startX, int startY, Direction startDirection, int depth, StudentWorld* ptr, int travelDistance)
+:Actor(imageID, startX, startY, startDirection, depth, ptr)
+{
+    m_maxTravel = travelDistance;
+    m_distTraveled = 0;
+}
+
+int Projectile::getDist() const{
+    return m_distTraveled;
+}
+
+int Projectile::getMaxTravel() const{
+    return m_maxTravel;
+}
+
+void Projectile::increaseDist(int dist){
+    m_distTraveled+=dist;
+}
+
+void Projectile::doSomething(){
+    if(isDead()){
+        return;
+    }
+    double x = SPRITE_RADIUS*2*cos(getDirection()*3.14159265/180);
+    double y = SPRITE_RADIUS*2*sin(getDirection()*3.14159265/180);
+    moveTo(getX()+x, getY()+y);
+    increaseDist(SPRITE_RADIUS*2);
+    if(getDist()>=getMaxTravel()){
+        setDead();
+    }
+}
+
 //FLAME PROJECTILE
-//Flame::Flame(int startX, int startY, StudentWorld* ptr)
-//:Actor(IID_FLAME, startX, startY, 0, 1, 0, ptr)
-//{
-//    
-//}
+Flame::Flame(int startX, int startY, Direction startDirection, StudentWorld* ptr)
+:Projectile(IID_FLAME, startX, startY, startDirection, 1, ptr, 32)
+{
+    
+}
+
 
 //SPRAY PROJECTILE
 Spray::Spray(int startX, int startY, Direction startDirection, StudentWorld* ptr)
-:Actor(IID_SPRAY, startX, startY, startDirection, 1, 0, ptr)
+:Projectile(IID_SPRAY, startX, startY, startDirection, 1, ptr, 112)
 {
     
 }
 
-//FOOD
-//
 
-
-Food::Food(int startX, int startY, StudentWorld* ptr)
-:Actor(IID_FOOD, startX, startY, 90, 1, 0, ptr)
-{
-    
-}
 
 
 

@@ -22,14 +22,14 @@ int StudentWorld::init()
     
     //initialize dirt objects
     int numDirt = max(180-20*getLevel(), 20);
-    for(int i=0; i<numDirt; i++){
+    for(int i=0; i<30; i++){
         double a = randInt(0, 360);
         double r = 120*sqrt(randInt(0, 10000)/10000.0);
         double x = r*cos(a*3.14159265/180)+128;
         double y = r*sin(a*3.14159265/180)+128;
         li.push_back(new Dirt(x, y, this));
-        li.back()->doSomething();
     }
+
     return GWSTATUS_CONTINUE_GAME;
 }
 
@@ -64,6 +64,44 @@ int StudentWorld::move()
     
     decLives();
     return GWSTATUS_CONTINUE_GAME;
+}
+
+bool StudentWorld::checkActorOverlap(double x, double y){
+    list<Actor*>::iterator it = li.begin();
+    while(it!=li.end()){
+        double xc = (*it)->getX();
+        double yc = (*it)->getY();
+        double dist = sqrt((xc-x)*(xc-x)+(yc-y)*(yc-y));
+        if(dist<=(SPRITE_RADIUS*2) && (*it)->isDamagable()){
+            if((*it)->hasHP()){
+                //decrement hp
+                return true;
+            }
+            else if(!(*it)->hasHP()){  //OR HP IS LESS THAN OR EQUAL TO 0
+                delete (*it);
+                (*it) = li.back();
+                li.pop_back();
+                it--;
+                return true;
+            }
+        }
+        it++;
+    }
+    return false;
+}
+
+bool StudentWorld::checkSocratesOverlap(double x, double y){
+    double xc = m_playerPtr->getX();
+    double yc = m_playerPtr->getY();
+    double dist = sqrt((xc-x)*(xc-x)+(yc-y)*(yc-y));
+    if(dist<=(SPRITE_RADIUS*2)){
+        return true;
+    }
+    return false;
+}
+
+void StudentWorld::restoreHealth(){
+    m_playerPtr->
 }
 
 void StudentWorld::addSpray(double x, double y, int dir)

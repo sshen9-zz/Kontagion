@@ -21,6 +21,7 @@ void Actor::doSomething(){
     return;
 }
 
+
 bool Actor::isDead() const{
     return m_dead;
 }
@@ -42,6 +43,14 @@ Dirt::Dirt(int startX, int startY, StudentWorld* ptr)
     
 }
 
+bool Dirt::isDamagable(){
+    return true;
+}
+
+bool Dirt::hasHP(){
+    return false;
+}
+
 Dirt::~Dirt(){
     ;
 }
@@ -52,6 +61,14 @@ Socrates::Socrates(StudentWorld* ptr)
 {
     m_sprayCount = 20;
     m_flameCount = 5;
+}
+
+bool Socrates::isDamagable(){
+    return true;
+}
+
+bool Socrates::hasHP(){
+    return true;
 }
 
 void Socrates::doSomething(){
@@ -91,10 +108,7 @@ void Socrates::doSomething(){
             default:
                 break;
         }
-    }
-    
-    //replenish spray
-    if(m_sprayCount<20){
+    }else if(m_sprayCount<20){
         m_sprayCount+=1;
     }
     return;
@@ -104,11 +118,24 @@ Socrates::~Socrates(){
     ;
 }
 
-Projectile::Projectile(int imageID, int startX, int startY, Direction startDirection, int depth, StudentWorld* ptr, int travelDistance)
+Projectile::Projectile(int imageID, int startX, int startY, Direction startDirection, int depth, StudentWorld* ptr, int travelDistance, int damage)
 :Actor(imageID, startX, startY, startDirection, depth, ptr)
 {
+    m_damage = damage;
     m_maxTravel = travelDistance;
     m_distTraveled = 0;
+}
+
+bool Projectile::isDamagable(){
+    return false;
+}
+
+bool Projectile::hasHP(){
+    return false;
+}
+
+int Projectile::getDamage() const{
+    return m_damage;
 }
 
 int Projectile::getDist() const{
@@ -129,16 +156,21 @@ void Projectile::doSomething(){
     }
     double x = SPRITE_RADIUS*2*cos(getDirection()*3.14159265/180);
     double y = SPRITE_RADIUS*2*sin(getDirection()*3.14159265/180);
+    if(getWorld()->checkActorOverlap(getX(), getY())){
+        setDead();
+        return;
+    }
     moveTo(getX()+x, getY()+y);
     increaseDist(SPRITE_RADIUS*2);
     if(getDist()>=getMaxTravel()){
         setDead();
     }
+    
 }
 
 //FLAME PROJECTILE
 Flame::Flame(int startX, int startY, Direction startDirection, StudentWorld* ptr)
-:Projectile(IID_FLAME, startX, startY, startDirection, 1, ptr, 32)
+:Projectile(IID_FLAME, startX, startY, startDirection, 1, ptr, 32, 5)
 {
     
 }
@@ -146,12 +178,62 @@ Flame::Flame(int startX, int startY, Direction startDirection, StudentWorld* ptr
 
 //SPRAY PROJECTILE
 Spray::Spray(int startX, int startY, Direction startDirection, StudentWorld* ptr)
-:Projectile(IID_SPRAY, startX, startY, startDirection, 1, ptr, 112)
+:Projectile(IID_SPRAY, startX, startY, startDirection, 1, ptr, 112, 2)
 {
     
 }
 
+//GOODIES
 
+Goodie::Goodie(int imageID, int startX, int startY, StudentWorld* ptr)
+:Actor(imageID, startX, startY, 0, 1, ptr)
+{
+    m_lifespan = std::max(rand()%(300-10*getWorld()->getLevel()), 50);
+}
+
+bool Goodie::isDamagable(){
+    return false;
+}
+
+bool Goodie::hasHP(){
+    return false;
+}
+
+int Goodie::getLifespan(){
+    return m_lifespan;
+}
+
+void Goodie::decreaseLife(){
+    m_lifespan-=1;
+}
+
+RestoreHealth::RestoreHealth(int startX, int startY, StudentWorld* ptr)
+:Goodie(IID_RESTORE_HEALTH_GOODIE, startX, startY, ptr)
+{
+    
+}
+
+void RestoreHealth::doSomething(){
+    if(isDead()){
+        return;
+    }
+    
+    if(getWorld()->checkSocratesOverlap(getX(), getY())){
+        //increase points by 250
+        getWorld()->increaseScore(250);
+        setDead();
+        //play sound
+        //restore health
+        getWorld()->
+        return;
+    }
+    
+    if(getLifespan()<=0){
+        setDead();
+    }
+    
+    decreaseLife();
+}
 
 
 

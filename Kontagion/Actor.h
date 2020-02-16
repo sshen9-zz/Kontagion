@@ -12,6 +12,8 @@ public:
     Actor(int imageID, int startX, int startY, Direction startDirection, int depth, StudentWorld* ptr);
     virtual ~Actor();
     virtual void doSomething();
+    virtual bool isDamagable() = 0;
+    virtual bool hasHP() = 0;
     bool isDead() const;
     void setDead();
     StudentWorld* getWorld() const;
@@ -27,6 +29,8 @@ class Dirt: public Actor
 public:
     Dirt(int startX, int startY, StudentWorld* ptr);
     virtual ~Dirt();
+    virtual bool isDamagable();
+    virtual bool hasHP();
     
 private:
 };
@@ -37,6 +41,8 @@ public:
     Socrates(StudentWorld* ptr);
     virtual ~Socrates();
     virtual void doSomething();
+    virtual bool isDamagable();
+    virtual bool hasHP();
 private:
     int m_sprayCount;
     int m_flameCount;
@@ -45,12 +51,16 @@ private:
 class Projectile: public Actor
 {
 public:
-    Projectile(int imageID, int startX, int startY, Direction startDirection, int depth, StudentWorld* ptr, int travelDistance);
+    Projectile(int imageID, int startX, int startY, Direction startDirection, int depth, StudentWorld* ptr, int travelDistance, int damage);
     int getMaxTravel() const;
     int getDist() const;
+    int getDamage() const;
     void increaseDist(int dist);
     virtual void doSomething();
+    virtual bool isDamagable();
+    virtual bool hasHP();
 private:
+    int m_damage;
     int m_maxTravel;
     int m_distTraveled;
     Direction m_direction;
@@ -70,4 +80,26 @@ public:
 private:
 };
 
+
+//GOODIES
+
+class Goodie: public Actor
+{
+public:
+    Goodie(int imageID, int startX, int startY, StudentWorld* ptr);
+    virtual bool isDamagable();
+    virtual bool hasHP();
+    int getLifespan();
+    void decreaseLife();
+private:
+    int m_lifespan;
+};
+
+class RestoreHealth: public Goodie
+{
+public:
+    RestoreHealth(int startX, int startY, StudentWorld* ptr);
+    virtual void doSomething();
+private:
+};
 #endif // ACTOR_H_

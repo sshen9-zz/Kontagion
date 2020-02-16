@@ -19,6 +19,9 @@ public:
     virtual ~StudentWorld();
     void addSpray(double x, double y, int dir);
     void addFlames(double x, double y, int dir);
+    bool checkActorOverlap(double x, double y);
+    bool checkSocratesOverlap(double x, double y);
+    void restoreHealth();
 private:
     Socrates* m_playerPtr;
     std::list<Actor*> li;

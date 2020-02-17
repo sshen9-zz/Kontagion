@@ -17,6 +17,10 @@ Actor::~Actor(){
     ;
 }
 
+bool Actor::isDamagable(){
+    return true;
+}
+
 void Actor::doSomething(){
     return;
 }
@@ -47,10 +51,6 @@ Dirt::Dirt(int startX, int startY, StudentWorld* ptr)
     
 }
 
-bool Dirt::isDamagable(){
-    return true;
-}
-
 Dirt::~Dirt(){
     ;
 }
@@ -73,6 +73,12 @@ void LivingActor::setHP(int num){
     m_HP = num;
 }
 
+void LivingActor::checkDead(){
+    if(m_HP<=0){
+        setDead();
+    }
+}
+
 Socrates::Socrates(StudentWorld* ptr)
 :LivingActor(IID_PLAYER, 0, 128, 0, 0, ptr, 100)
 {
@@ -80,12 +86,8 @@ Socrates::Socrates(StudentWorld* ptr)
     m_flameCount = 5;
 }
 
-bool Socrates::isDamagable(){
-    return true;
-}
-
-
 void Socrates::doSomething(){
+    checkDead();
     if(isDead()){
         return;
     }
@@ -108,7 +110,7 @@ void Socrates::doSomething(){
                 if(m_flameCount>0){
                     //add 16 flame objects
                     getWorld()->addFlames(getX(), getY(), getDirection());
-//                    m_flameCount-=1;
+                    m_flameCount-=1;
                     //playsound
                 }
                 break;
@@ -205,10 +207,6 @@ Goodie::Goodie(int imageID, int startX, int startY, StudentWorld* ptr)
     m_lifespan = std::max(rand()%(300-10*getWorld()->getLevel()), 50);
 }
 
-bool Goodie::isDamagable(){
-    return false;
-}
-
 int Goodie::getLifespan(){
     return m_lifespan;
 }
@@ -237,7 +235,7 @@ void RestoreHealth::doSomething(){
         setDead();
         //play sound
         //restore health
-        getWorld()->restoreHealth();
+        getWorld()->restorePlayerHealth();
         return;
     }
     
@@ -276,5 +274,78 @@ void FlameGoodie::doSomething(){
     decreaseLife();
 }
 
+//CHANGE HERE
+
+ExtraLifeGoodie::ExtraLifeGoodie(int startX, int startY, StudentWorld* ptr)
+:Goodie(IID_EXTRA_LIFE_GOODIE, startX, startY, ptr)
+{
+
+}
+
+void ExtraLifeGoodie::doSomething(){
+    if(isDead()){
+        return;
+    }
+    if(getWorld()->checkSocratesOverlap(getX(), getY())){
+        getWorld()->increaseScore(500);
+        setDead();
+        //playsound
+        getWorld()->incLives();
+        return;
+    }
+    if(getLifespan()<=0){
+        setDead();
+    }
+
+    decreaseLife();
+    return;
+}
+
+Fungus::Fungus(int startX, int startY, StudentWorld* ptr)
+:Goodie(IID_FUNGUS, startX, startY, ptr)
+{
+    
+}
+
+void Fungus::doSomething(){
+    if(isDead()){
+        return;
+    }
+    if(getWorld()->checkSocratesOverlap(getX(), getY())){
+        getWorld()->increaseScore(-50);
+        setDead();
+        getWorld()->hurtPlayerHealth(20);
+        return;
+    }
+
+    if(getLifespan()<=0){
+        setDead();
+    }
+
+    decreaseLife();
+    return;
+}
+
+
+Bacteria::Bacteria(int imageID, int startX, int startY, Direction startDirection, int depth, StudentWorld* ptr, int hp, int mpDist)
+:LivingActor(imageID, startX, startY, startDirection, depth, ptr, hp)
+{
+    
+}
+
+Salmonella::Salmonella(int imageID, int startX, int startY, StudentWorld* ptr)
+:Bacteria(IID_SALMONELLA, startX, startY, 90, 0, ptr, 4, 0)
+{
+    
+}
+
+void Salmonella::doSomething(){
+    if(isDead()){
+        return;
+    }
+    if(getWorld()->checkSocratesOverlap(getX(), getY())){
+        ;
+    }
+}
 
 

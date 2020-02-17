@@ -21,7 +21,8 @@ public:
     void addFlames(double x, double y, int dir);
     bool checkActorOverlap(double x, double y);
     bool checkSocratesOverlap(double x, double y);
-    void restoreHealth();
+    void restorePlayerHealth();
+    void hurtPlayerHealth(int num);
     void addPlayerFlame();
 private:
     Socrates* m_playerPtr;

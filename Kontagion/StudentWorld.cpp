@@ -6,7 +6,7 @@ using namespace std;
 
 GameWorld* createStudentWorld(string assetPath)
 {
-	return new StudentWorld(assetPath);
+    return new StudentWorld(assetPath);
 }
 
 // Students:  Add code to this file, StudentWorld.h, Actor.h and Actor.cpp
@@ -20,16 +20,16 @@ int StudentWorld::init()
 {
     m_playerPtr = new Socrates(this);
     
-    initialize dirt objects
+    //initialize dirt objects
     int numDirt = max(180-20*getLevel(), 20);
-    for(int i=0; i<30; i++){
+    for(int i=0; i<numDirt; i++){
         double a = randInt(0, 360);
         double r = 120*sqrt(randInt(0, 10000)/10000.0);
         double x = r*cos(a*3.14159265/180)+128;
         double y = r*sin(a*3.14159265/180)+128;
         li.push_back(new Dirt(x, y, this));
     }
-    
+
     li.push_back(new FlameGoodie(5, 150, this));
     li.push_back(new RestoreHealth(VIEW_WIDTH/2-50, VIEW_HEIGHT/2-50, this));
 
@@ -103,8 +103,13 @@ bool StudentWorld::checkSocratesOverlap(double x, double y){
     return false;
 }
 
-void StudentWorld::restoreHealth(){
+void StudentWorld::restorePlayerHealth(){
     m_playerPtr->setHP(100);
+}
+
+void StudentWorld::hurtPlayerHealth(int num)
+{
+    m_playerPtr->setHP(m_playerPtr->getHP()-num);
 }
 
 void StudentWorld::addSpray(double x, double y, int dir)

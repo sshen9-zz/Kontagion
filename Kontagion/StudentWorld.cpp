@@ -20,7 +20,7 @@ int StudentWorld::init()
 {
     m_playerPtr = new Socrates(this);
     
-    //initialize dirt objects
+    initialize dirt objects
     int numDirt = max(180-20*getLevel(), 20);
     for(int i=0; i<30; i++){
         double a = randInt(0, 360);
@@ -29,6 +29,9 @@ int StudentWorld::init()
         double y = r*sin(a*3.14159265/180)+128;
         li.push_back(new Dirt(x, y, this));
     }
+    
+    li.push_back(new FlameGoodie(5, 150, this));
+    li.push_back(new RestoreHealth(VIEW_WIDTH/2-50, VIEW_HEIGHT/2-50, this));
 
     return GWSTATUS_CONTINUE_GAME;
 }
@@ -101,7 +104,7 @@ bool StudentWorld::checkSocratesOverlap(double x, double y){
 }
 
 void StudentWorld::restoreHealth(){
-    m_playerPtr->
+    m_playerPtr->setHP(100);
 }
 
 void StudentWorld::addSpray(double x, double y, int dir)
@@ -119,6 +122,10 @@ void StudentWorld::addFlames(double x, double y, int dir){
         li.push_back(new Flame(x+xc, y+yc, newDir, this));
         newDir+=22;
     }
+}
+
+void StudentWorld::addPlayerFlame(){
+    m_playerPtr->addFlame();
 }
 
 void StudentWorld::cleanUp()

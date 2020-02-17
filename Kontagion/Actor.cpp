@@ -30,6 +30,10 @@ void Actor::setDead(){
     m_dead = true;
 }
 
+bool Actor::hasHP(){
+    return false;
+}
+
 StudentWorld* Actor::getWorld() const{
     return m_worldPtr;
 }
@@ -47,17 +51,30 @@ bool Dirt::isDamagable(){
     return true;
 }
 
-bool Dirt::hasHP(){
-    return false;
-}
-
 Dirt::~Dirt(){
     ;
 }
 
+LivingActor::LivingActor(int imageID, int startX, int startY, Direction startDirection, int depth, StudentWorld* ptr, int hp)
+:Actor(imageID, startX, startY, startDirection, depth, ptr)
+{
+    m_HP = hp;
+}
+
+bool LivingActor::hasHP(){
+    return true;
+}
+
+int LivingActor::getHP(){
+    return m_HP;
+}
+
+void LivingActor::setHP(int num){
+    m_HP = num;
+}
 
 Socrates::Socrates(StudentWorld* ptr)
-:Actor(IID_PLAYER, 0, 128, 0, 0, ptr)
+:LivingActor(IID_PLAYER, 0, 128, 0, 0, ptr, 100)
 {
     m_sprayCount = 20;
     m_flameCount = 5;
@@ -67,9 +84,6 @@ bool Socrates::isDamagable(){
     return true;
 }
 
-bool Socrates::hasHP(){
-    return true;
-}
 
 void Socrates::doSomething(){
     if(isDead()){
@@ -114,6 +128,10 @@ void Socrates::doSomething(){
     return;
 }
 
+void Socrates::addFlame(){
+    m_flameCount+=5;
+}
+
 Socrates::~Socrates(){
     ;
 }
@@ -127,10 +145,6 @@ Projectile::Projectile(int imageID, int startX, int startY, Direction startDirec
 }
 
 bool Projectile::isDamagable(){
-    return false;
-}
-
-bool Projectile::hasHP(){
     return false;
 }
 
@@ -195,10 +209,6 @@ bool Goodie::isDamagable(){
     return false;
 }
 
-bool Goodie::hasHP(){
-    return false;
-}
-
 int Goodie::getLifespan(){
     return m_lifespan;
 }
@@ -206,6 +216,9 @@ int Goodie::getLifespan(){
 void Goodie::decreaseLife(){
     m_lifespan-=1;
 }
+
+
+//RESTORE HEALTH GOODIE
 
 RestoreHealth::RestoreHealth(int startX, int startY, StudentWorld* ptr)
 :Goodie(IID_RESTORE_HEALTH_GOODIE, startX, startY, ptr)
@@ -224,7 +237,35 @@ void RestoreHealth::doSomething(){
         setDead();
         //play sound
         //restore health
-        getWorld()->
+        getWorld()->restoreHealth();
+        return;
+    }
+    
+    if(getLifespan()<=0){
+        setDead();
+    }
+    
+    decreaseLife();
+}
+
+//FLAME GOODIE
+
+FlameGoodie::FlameGoodie(int startX, int startY, StudentWorld* ptr)
+:Goodie(IID_FLAME_THROWER_GOODIE, startX, startY, ptr)
+{
+    
+}
+
+void FlameGoodie::doSomething(){
+    if(isDead()){
+        return;
+    }
+    
+    if(getWorld()->checkSocratesOverlap(getX(), getY())){
+        getWorld()->increaseScore(300);
+        setDead();
+        //play sound
+        getWorld()->addPlayerFlame();
         return;
     }
     

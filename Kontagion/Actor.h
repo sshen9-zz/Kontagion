@@ -13,15 +13,38 @@ public:
     virtual ~Actor();
     virtual void doSomething();
     virtual bool isDamagable() = 0;
-    virtual bool hasHP() = 0;
+    virtual bool hasHP();
     bool isDead() const;
     void setDead();
     StudentWorld* getWorld() const;
     
 private:
     bool m_dead;
-    int m_HP;
     StudentWorld* m_worldPtr;
+};
+
+class LivingActor: public Actor
+{
+public:
+    LivingActor(int imageID, int startX, int startY, Direction startDirection, int depth, StudentWorld* ptr, int hp);
+    virtual bool hasHP();
+    int getHP();
+    void setHP(int num);
+private:
+    int m_HP;
+};
+
+class Socrates: public LivingActor
+{
+public:
+    Socrates(StudentWorld* ptr);
+    virtual ~Socrates();
+    virtual void doSomething();
+    virtual bool isDamagable();
+    void addFlame();
+private:
+    int m_sprayCount;
+    int m_flameCount;
 };
 
 class Dirt: public Actor
@@ -30,22 +53,8 @@ public:
     Dirt(int startX, int startY, StudentWorld* ptr);
     virtual ~Dirt();
     virtual bool isDamagable();
-    virtual bool hasHP();
     
 private:
-};
-
-class Socrates: public Actor
-{
-public:
-    Socrates(StudentWorld* ptr);
-    virtual ~Socrates();
-    virtual void doSomething();
-    virtual bool isDamagable();
-    virtual bool hasHP();
-private:
-    int m_sprayCount;
-    int m_flameCount;
 };
 
 class Projectile: public Actor
@@ -58,7 +67,6 @@ public:
     void increaseDist(int dist);
     virtual void doSomething();
     virtual bool isDamagable();
-    virtual bool hasHP();
 private:
     int m_damage;
     int m_maxTravel;
@@ -88,7 +96,6 @@ class Goodie: public Actor
 public:
     Goodie(int imageID, int startX, int startY, StudentWorld* ptr);
     virtual bool isDamagable();
-    virtual bool hasHP();
     int getLifespan();
     void decreaseLife();
 private:
@@ -99,6 +106,14 @@ class RestoreHealth: public Goodie
 {
 public:
     RestoreHealth(int startX, int startY, StudentWorld* ptr);
+    virtual void doSomething();
+private:
+};
+
+class FlameGoodie: public Goodie
+{
+public:
+    FlameGoodie(int startX, int startY, StudentWorld* ptr);
     virtual void doSomething();
 private:
 };

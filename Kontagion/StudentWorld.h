@@ -22,6 +22,7 @@ public:
     bool checkActorOverlap(double x, double y);
     bool checkSocratesOverlap(double x, double y);
     void restoreHealth();
+    void addPlayerFlame();
 private:
     Socrates* m_playerPtr;
     std::list<Actor*> li;

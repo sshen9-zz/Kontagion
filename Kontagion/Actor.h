@@ -13,7 +13,10 @@ public:
     virtual ~Actor();
     virtual void doSomething();
     virtual bool isDamagable();
+    virtual bool isFood();
+    virtual bool isDirt();
     virtual bool hasHP();
+    virtual void decHP(int dmg);
     bool isDead() const;
     void setDead();
     StudentWorld* getWorld() const;
@@ -28,9 +31,11 @@ class LivingActor: public Actor
 public:
     LivingActor(int imageID, int startX, int startY, Direction startDirection, int depth, StudentWorld* ptr, int hp);
     virtual bool hasHP();
-    int getHP();
-    void setHP(int num);
+    virtual int getHP();
+    virtual void setHP(int num);
+    virtual void decHP(int dmg);
     void checkDead();
+    
 private:
     int m_HP;
 };
@@ -51,8 +56,18 @@ class Dirt: public Actor
 {
 public:
     Dirt(int startX, int startY, StudentWorld* ptr);
+    virtual bool isDirt();
     virtual ~Dirt();
     
+private:
+};
+
+class Food: public Actor
+{
+public:
+    Food(int startX, int startY, StudentWorld* ptr);
+    virtual bool isDamagable();
+    virtual bool isFood();
 private:
 };
 
@@ -136,13 +151,21 @@ class Bacteria: public LivingActor
 {
 public:
     Bacteria(int imageID, int startX, int startY, Direction startDirection, int depth, StudentWorld* ptr, int hp, int mpDist);
+    int getFoodCount();
+    void incFoodCount();
+    void resetFoodCount();
+    int getMpDist();
+    void decMpDist();
+    void setMpDist();
 private:
+    int m_foodCount;
+    int m_mpDist;
 };
 
 class Salmonella: public Bacteria
 {
 public:
-    Salmonella(int imageID, int startX, int startY, StudentWorld* ptr);
+    Salmonella(int startX, int startY, StudentWorld* ptr);
     virtual void doSomething();
 private:
 };

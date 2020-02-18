@@ -2,6 +2,7 @@
 #include "GameConstants.h"
 #include "Actor.h"
 #include <string>
+#include <math.h>
 using namespace std;
 
 GameWorld* createStudentWorld(string assetPath)
@@ -23,15 +24,49 @@ int StudentWorld::init()
     //initialize dirt objects
     int numDirt = max(180-20*getLevel(), 20);
     for(int i=0; i<numDirt; i++){
-        double a = randInt(0, 360);
+        double a = randInt(0, 359);
         double r = 120*sqrt(randInt(0, 10000)/10000.0);
         double x = r*cos(a*3.14159265/180)+128;
         double y = r*sin(a*3.14159265/180)+128;
         li.push_back(new Dirt(x, y, this));
     }
+    
+    for(int i=0; i<10; i++){
+        double a = randInt(0, 359);
+        double r = 120*sqrt(randInt(0, 10000)/10000.0);
+        double x = r*cos(a*3.14159265/180)+128;
+        double y = r*sin(a*3.14159265/180)+128;
+        li.push_back(new Food(x, y, this));
+    }
 
-    li.push_back(new FlameGoodie(5, 150, this));
-    li.push_back(new RestoreHealth(VIEW_WIDTH/2-50, VIEW_HEIGHT/2-50, this));
+//    li.push_back(new RestoreHealth(VIEW_WIDTH/2-50, VIEW_HEIGHT/2-50, this));
+////    li.push_back(new Food(50,100,this));
+//    li.push_back(new Food(180,VIEW_HEIGHT/2,this));
+//    li.push_back(new Food(VIEW_WIDTH/2 + (VIEW_RADIUS),VIEW_HEIGHT/2,this));
+
+    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
 
     return GWSTATUS_CONTINUE_GAME;
 }
@@ -41,8 +76,7 @@ int StudentWorld::move()
     // This code is here merely to allow the game to build, run, and terminate after you hit enter.
     // Notice that the return value GWSTATUS_PLAYER_DIED will cause our framework to end the current level.
     m_playerPtr->doSomething();
-    
-    
+
     list<Actor*>::iterator it = li.begin();
     while(it!=li.end()){
         if(!(*it)->isDead()){
@@ -51,7 +85,6 @@ int StudentWorld::move()
         }
         it++;
     }
-
     //delete dead actors
     it = li.begin();
     while(it!=li.end()){
@@ -69,7 +102,24 @@ int StudentWorld::move()
     return GWSTATUS_CONTINUE_GAME;
 }
 
-bool StudentWorld::checkActorOverlap(double x, double y){
+bool StudentWorld::checkFoodOverlap(double x, double y){
+    list<Actor*>::iterator it = li.begin();
+    while(it!=li.end()){
+        if((*it)->isFood()){
+            double xc = (*it)->getX();
+            double yc = (*it)->getY();
+            double dist = sqrt((xc-x)*(xc-x)+(yc-y)*(yc-y));
+            if(dist<=SPRITE_RADIUS*2){
+                (*it)->setDead();
+                return true;
+            }
+        }
+        it++;
+    }
+    return false;
+}
+
+bool StudentWorld::checkProjOverlap(double x, double y, int dmg){
     list<Actor*>::iterator it = li.begin();
     while(it!=li.end()){
         double xc = (*it)->getX();
@@ -78,13 +128,11 @@ bool StudentWorld::checkActorOverlap(double x, double y){
         if(dist<=(SPRITE_RADIUS*2) && (*it)->isDamagable()){
             if((*it)->hasHP()){
                 //decrement hp
+                (*it)->decHP(dmg);
                 return true;
             }
             else if(!(*it)->hasHP()){  //OR HP IS LESS THAN OR EQUAL TO 0
-                delete (*it);
-                (*it) = li.back();
-                li.pop_back();
-                it--;
+                (*it)->setDead();
                 return true;
             }
         }
@@ -101,6 +149,55 @@ bool StudentWorld::checkSocratesOverlap(double x, double y){
         return true;
     }
     return false;
+}
+
+bool StudentWorld::canBacteriaMoveForward(double x, double y, int dir){
+    x+=3*cos(dir*3.14159265/180);
+    y+=3*sin(dir*3.14159265/180);
+    double d = sqrt(((VIEW_WIDTH/2)-x)*((VIEW_WIDTH/2)-x)+((VIEW_HEIGHT/2)-y)*((VIEW_HEIGHT/2)-y));
+    if(d>=VIEW_RADIUS){
+        return false;
+    }
+    list<Actor*>::iterator it = li.begin();
+    while(it!=li.end()){
+        if((*it)->isDirt()){
+            double xc = (*it)->getX();
+            double yc = (*it)->getY();
+            double dist = sqrt((xc-x)*(xc-x)+(yc-y)*(yc-y));
+            if(dist<=SPRITE_RADIUS){
+                return false;
+            }
+        }
+        it++;
+    }
+    return true;
+}
+
+bool StudentWorld::getClosestFoodAngle(double x, double y, int &dir){
+ 
+    //WRONG
+    //WRONG
+    //WRONG
+    
+    list<Actor*>::iterator it = li.begin();
+    bool flag = false;
+    double minDist = 128;
+    while(it!=li.end()){
+        if((*it)->isFood()){
+            double xc = (*it)->getX();
+            double yc = (*it)->getY();
+            double dist = sqrt((x-xc)*(x-xc)+(y-yc)*(y-yc));
+            if(dist<=minDist){
+                double degrees;
+                flag = true;
+                degrees = atan2((yc-(y)),(xc-(x)))*(180/3.14159265);
+                dir = degrees;
+                return flag;
+            }
+        }
+        it++;
+    }
+    return flag;
 }
 
 void StudentWorld::restorePlayerHealth(){
@@ -131,6 +228,10 @@ void StudentWorld::addFlames(double x, double y, int dir){
 
 void StudentWorld::addPlayerFlame(){
     m_playerPtr->addFlame();
+}
+
+void StudentWorld::addBacteria(Actor* ptr){
+    li.push_back(ptr);
 }
 
 void StudentWorld::cleanUp()

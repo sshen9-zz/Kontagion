@@ -19,11 +19,15 @@ public:
     virtual ~StudentWorld();
     void addSpray(double x, double y, int dir);
     void addFlames(double x, double y, int dir);
-    bool checkActorOverlap(double x, double y);
+    bool checkProjOverlap(double x, double y, int dmg);
     bool checkSocratesOverlap(double x, double y);
+    bool checkFoodOverlap(double x, double y);
+    bool canBacteriaMoveForward(double x, double y, int dir);
     void restorePlayerHealth();
     void hurtPlayerHealth(int num);
     void addPlayerFlame();
+    bool getClosestFoodAngle(double x, double y, int& dir);
+    void addBacteria(Actor* ptr);
 private:
     Socrates* m_playerPtr;
     std::list<Actor*> li;

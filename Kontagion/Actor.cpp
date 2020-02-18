@@ -38,6 +38,18 @@ bool Actor::hasHP(){
     return false;
 }
 
+bool Actor::isFood(){
+    return false;
+}
+
+bool Actor::isDirt(){
+    return false;
+}
+
+void Actor::decHP(int dmg){
+    return;
+}
+
 StudentWorld* Actor::getWorld() const{
     return m_worldPtr;
 }
@@ -51,8 +63,25 @@ Dirt::Dirt(int startX, int startY, StudentWorld* ptr)
     
 }
 
+bool Dirt::isDirt(){
+    return true;
+}
+
 Dirt::~Dirt(){
     ;
+}
+
+Food::Food(int startX, int startY, StudentWorld* ptr)
+:Actor(IID_FOOD, startX, startY, 90, 1, ptr)
+{
+}
+
+bool Food::isDamagable(){
+    return false;
+}
+
+bool Food::isFood(){
+    return true;
 }
 
 LivingActor::LivingActor(int imageID, int startX, int startY, Direction startDirection, int depth, StudentWorld* ptr, int hp)
@@ -77,6 +106,10 @@ void LivingActor::checkDead(){
     if(m_HP<=0){
         setDead();
     }
+}
+
+void LivingActor::decHP(int dmg){
+    m_HP-=dmg;
 }
 
 Socrates::Socrates(StudentWorld* ptr)
@@ -172,7 +205,7 @@ void Projectile::doSomething(){
     }
     double x = SPRITE_RADIUS*2*cos(getDirection()*3.14159265/180);
     double y = SPRITE_RADIUS*2*sin(getDirection()*3.14159265/180);
-    if(getWorld()->checkActorOverlap(getX(), getY())){
+    if(getWorld()->checkProjOverlap(getX(), getY(), getDamage())){
         setDead();
         return;
     }
@@ -330,21 +363,97 @@ void Fungus::doSomething(){
 Bacteria::Bacteria(int imageID, int startX, int startY, Direction startDirection, int depth, StudentWorld* ptr, int hp, int mpDist)
 :LivingActor(imageID, startX, startY, startDirection, depth, ptr, hp)
 {
-    
+    m_foodCount = 0;
+    m_mpDist = mpDist;
 }
 
-Salmonella::Salmonella(int imageID, int startX, int startY, StudentWorld* ptr)
+int Bacteria::getFoodCount(){
+    return m_foodCount;
+}
+
+void Bacteria::resetFoodCount(){
+    m_foodCount = 0;
+}
+
+void Bacteria::incFoodCount(){
+    m_foodCount+=1;
+}
+
+int Bacteria::getMpDist(){
+    return m_mpDist;
+}
+
+void Bacteria::decMpDist(){
+    m_mpDist-=1;
+}
+
+void Bacteria::setMpDist(){
+    m_mpDist = 10;
+}
+
+Salmonella::Salmonella(int startX, int startY, StudentWorld* ptr)
 :Bacteria(IID_SALMONELLA, startX, startY, 90, 0, ptr, 4, 0)
 {
     
 }
 
 void Salmonella::doSomething(){
+    checkDead();
     if(isDead()){
         return;
     }
     if(getWorld()->checkSocratesOverlap(getX(), getY())){
-        ;
+        getWorld()->hurtPlayerHealth(1);
+    }else if(getFoodCount()==3){
+        double newx;
+        double newy;
+        if(getX()<=VIEW_WIDTH/2){
+            newx = getX()+SPRITE_RADIUS;
+        }else{
+            newx = getX()-SPRITE_RADIUS;
+        }
+        if(getY()<=VIEW_HEIGHT/2){
+            newy = getY()+SPRITE_RADIUS;
+        }else{
+            newy = getY()-SPRITE_RADIUS;
+        }
+        //add new salmonella at coordinate
+        getWorld()->addBacteria(new Salmonella(newx, newy, getWorld()));
+        resetFoodCount();
+    }else if(getWorld()->checkFoodOverlap(getX(), getY())){
+        incFoodCount();
+    }
+    
+    if(getMpDist()>0){
+        decMpDist();
+        if(getWorld()->canBacteriaMoveForward(getX(), getY(), getDirection())){
+            double x = getX()+ 3*cos(getDirection()*3.14159265/180);
+            double y = getY()+ 3*sin(getDirection()*3.14159265/180);
+            moveTo(x, y);
+        }else{
+            int dir = randInt(0, 359);
+            setDirection(dir);
+            setMpDist();
+        }
+        return;
+    }else{
+        //get directional angle of closest food
+        int dir;
+        if(getWorld()->getClosestFoodAngle(getX(), getY(), dir)){
+            setDirection(dir);
+            std::cout<<dir<<std::endl;
+            if(getWorld()->canBacteriaMoveForward(getX(), getY(), dir)){
+                double x = getX()+ 3*cos(getDirection()*3.14159265/180);
+                double y = getY()+ 3*sin(getDirection()*3.14159265/180);
+                moveTo(x, y);
+            }else{
+                setDirection(randInt(0, 359));
+                setMpDist();
+            }
+        }else{
+            setDirection(randInt(0, 359));
+            setMpDist();
+        }
     }
 }
 

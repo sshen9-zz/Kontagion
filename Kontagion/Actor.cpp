@@ -46,6 +46,10 @@ bool Actor::isDirt(){
     return false;
 }
 
+bool Actor::isPit(){
+    return false;
+}
+
 void Actor::decHP(int dmg){
     return;
 }
@@ -622,6 +626,91 @@ void Ecoli::doSomething(){
     }
     
     EcoliChasePlayer(getX(), getY());
+}
+
+Pit::Pit(int startX, int startY, StudentWorld* ptr)
+:Actor(IID_PIT, startX, startY, 0, 1, ptr)
+{
+    m_EcoliLeft = 2;
+    m_SalmonellaLeft = 5;
+    m_AggressiveSalmonellaLeft = 3;
+    m_sumBacteria = 10;
+}
+
+bool Pit::isPit(){
+    return true;
+}
+
+int Pit::getEcoli(){
+    return m_EcoliLeft;
+}
+
+int Pit::getSalmonella(){
+    return m_SalmonellaLeft;
+}
+
+int Pit::getAggressiveSalmonella(){
+    return m_AggressiveSalmonellaLeft;
+}
+
+int Pit::getSum(){
+    return m_sumBacteria;
+}
+
+bool Pit::emittedAll(){
+    return (getSum() == 0);
+}
+
+void Pit::decEcoli(){
+    m_EcoliLeft-=1;
+}
+
+void Pit::decSalmonella(){
+    m_SalmonellaLeft-=1;
+}
+
+void Pit::decAggressiveSalmonella(){
+    m_AggressiveSalmonellaLeft-=1;
+}
+
+void Pit::decSum(){
+    m_sumBacteria-=1;
+}
+
+void Pit::doSomething(){
+    if(emittedAll()){
+        //inform studentworld
+        setDead();
+    }else{
+        int num = randInt(1, 50);
+        //1 in 50 chance
+        if(num == 25){
+            //PLAY SOUNDS
+            while(true){
+                int n = randInt(1, 3);
+                if(n == 1 && getEcoli()!=0){
+                    //create new ecoli
+                    getWorld()->addBacteria(new Ecoli(getX(), getY(), getWorld()));
+                    decEcoli();
+                    decSum();
+                    return;
+                }else if(n==2 && getSalmonella()!=0){
+                    //create salmonella
+                    getWorld()->addBacteria(new Salmonella(getX(), getY(), getWorld()));
+                    decSalmonella();
+                    decSum();
+                    return;
+                }else if(n==3 && getAggressiveSalmonella()!=0){
+                    //create aggressive
+                    getWorld()->addBacteria(new AggressiveSalmonella(getX(), getY(), getWorld()));
+                    decAggressiveSalmonella();
+                    decSum();
+                    return;
+                }
+            }
+        }
+    }
+    
 }
 
 

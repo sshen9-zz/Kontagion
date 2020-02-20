@@ -20,35 +20,49 @@ int StudentWorld::init()
 {
     m_playerPtr = new Socrates(this);
     
+    //initialize pits
+    for(int i=0; i<getLevel(); i++){
+        while(true){
+            double a = randInt(0, 359);
+            double r = 120*sqrt(randInt(0, 10000)/10000.0);
+            double x = r*cos(a*3.14159265/180)+128;
+            double y = r*sin(a*3.14159265/180)+128;
+            if(!checkPitOverlap(x, y)){
+                li.push_back(new Pit(x,y,this));
+                break;
+            }
+        }
+    }
+    
+    //initialize food
+    int numFood = min(5*getLevel(), 25);
+    for(int i=0; i<numFood; i++){
+        while(true){
+            double a = randInt(0, 359);
+            double r = 120*sqrt(randInt(0, 10000)/10000.0);
+            double x = r*cos(a*3.14159265/180)+128;
+            double y = r*sin(a*3.14159265/180)+128;
+            if(!checkCreateFoodOverlap(x, y)){
+                li.push_back(new Food(x, y, this));
+                break;
+            }
+        }
+    }
+    
     //initialize dirt objects
     int numDirt = max(180-20*getLevel(), 20);
     for(int i=0; i<numDirt; i++){
-        double a = randInt(0, 359);
-        double r = 120*sqrt(randInt(0, 10000)/10000.0);
-        double x = r*cos(a*3.14159265/180)+128;
-        double y = r*sin(a*3.14159265/180)+128;
-        li.push_back(new Dirt(x, y, this));
+        while(true){
+            double a = randInt(0, 359);
+            double r = 120*sqrt(randInt(0, 10000)/10000.0);
+            double x = r*cos(a*3.14159265/180)+128;
+            double y = r*sin(a*3.14159265/180)+128;
+            if(!checkCreateDirtOverlap(x, y)){
+                li.push_back(new Dirt(x, y, this));
+                break;
+            }
+        }
     }
-    
-    for(int i=0; i<30; i++){
-        double a = randInt(0, 359);
-        double r = 120*sqrt(randInt(0, 10000)/10000.0);
-        double x = r*cos(a*3.14159265/180)+128;
-        double y = r*sin(a*3.14159265/180)+128;
-        li.push_back(new Food(x, y, this));
-    }
-
-    li.push_back(new RestoreHealth(VIEW_WIDTH/2-50, VIEW_HEIGHT/2-50, this));
-    li.push_back(new FlameGoodie(180,VIEW_HEIGHT/2,this));
-
-    
-//    li.push_back(new AggressiveSalmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
-//    li.push_back(new AggressiveSalmonella(VIEW_WIDTH/2,VIEW_HEIGHT/2+30,this));
-
-    li.push_back(new Ecoli(50,150,this));
-    
-    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
-
 
 
     return GWSTATUS_CONTINUE_GAME;
@@ -78,7 +92,6 @@ int StudentWorld::move()
         }
         it++;
     }
-    
     decLives();
     return GWSTATUS_CONTINUE_GAME;
 }
@@ -87,6 +100,23 @@ bool StudentWorld::checkFoodOverlap(double x, double y){
     list<Actor*>::iterator it = li.begin();
     while(it!=li.end()){
         if((*it)->isFood()){
+            double xc = (*it)->getX();
+            double yc = (*it)->getY();
+            double dist = sqrt((xc-x)*(xc-x)+(yc-y)*(yc-y));
+            if(dist<=SPRITE_RADIUS*2){
+                (*it)->setDead();
+                return true;
+            }
+        }
+        it++;
+    }
+    return false;
+}
+
+bool StudentWorld::checkCreateFoodOverlap(double x, double y){
+    list<Actor*>::iterator it = li.begin();
+    while(it!=li.end()){
+        if((*it)->isFood() || (*it)->isPit()){
             double xc = (*it)->getX();
             double yc = (*it)->getY();
             double dist = sqrt((xc-x)*(xc-x)+(yc-y)*(yc-y));
@@ -223,6 +253,39 @@ double StudentWorld::getDistanceAndDirFromPlayer(double x, double y, int& dir){
     double dist = sqrt((x-px)*(x-px)+(y-py)*(y-py));
     return dist;
 }
+
+bool StudentWorld::checkPitOverlap(double x, double y){
+    list<Actor*>::iterator it = li.begin();
+    while(it!=li.end()){
+        if((*it)->isPit()){
+            double xc = (*it)->getX();
+            double yc = (*it)->getY();
+            double dist = sqrt((x-xc)*(x-xc)+(y-yc)*(y-yc));
+            if(dist<=SPRITE_WIDTH){
+                return true;
+            }
+        }
+        it++;
+    }
+    return false;
+}
+
+bool StudentWorld::checkCreateDirtOverlap(double x, double y){
+    list<Actor*>::iterator it = li.begin();
+    while(it!=li.end()){
+        if((*it)->isFood() || (*it)->isPit()){
+            double xc = (*it)->getX();
+            double yc = (*it)->getY();
+            double dist = sqrt((x-xc)*(x-xc)+(y-yc)*(y-yc));
+            if(dist<=SPRITE_WIDTH){
+                return true;
+            }
+        }
+        it++;
+    }
+    return false;
+}
+
 
 void StudentWorld::cleanUp()
 {

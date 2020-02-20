@@ -30,6 +30,9 @@ public:
     void addBacteria(Actor* ptr);
     double getDistanceAndDirFromPlayer(double x, double y, int& dir);
 private:
+    bool checkCreateDirtOverlap(double x, double y);
+    bool checkCreateFoodOverlap(double x, double y);
+    bool checkPitOverlap(double x, double y);
     Socrates* m_playerPtr;
     std::list<Actor*> li;
 };

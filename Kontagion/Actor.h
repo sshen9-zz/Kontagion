@@ -11,6 +11,7 @@ class Actor: public GraphObject
 public:
     Actor(int imageID, int startX, int startY, Direction startDirection, int depth, StudentWorld* ptr);
     virtual ~Actor();
+    virtual bool isPit();
     virtual void doSomething();
     virtual bool isDamagable();
     virtual bool isFood();
@@ -186,6 +187,29 @@ public:
     virtual void doSomething();
     void EcoliChasePlayer(double x, double y);
 private:
+};
+
+class Pit: public Actor
+{
+public:
+    Pit(int startX, int startY, StudentWorld* ptr);
+    virtual void doSomething();
+    virtual bool isPit();
+    bool emittedAll();
+    int getSalmonella();
+    int getAggressiveSalmonella();
+    int getEcoli();
+    int getSum();
+    void decEcoli();
+    void decSalmonella();
+    void decAggressiveSalmonella();
+    void decSum();
+private:
+    int m_SalmonellaLeft;
+    int m_AggressiveSalmonellaLeft;
+    int m_EcoliLeft;
+    int m_sumBacteria;
+    
 };
 
 #endif // ACTOR_H_

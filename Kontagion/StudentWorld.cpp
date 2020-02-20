@@ -42,14 +42,13 @@ int StudentWorld::init()
     li.push_back(new FlameGoodie(180,VIEW_HEIGHT/2,this));
 
     
-    li.push_back(new AggressiveSalmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
-    li.push_back(new AggressiveSalmonella(VIEW_WIDTH/2,VIEW_HEIGHT/2+30,this));
+//    li.push_back(new AggressiveSalmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new AggressiveSalmonella(VIEW_WIDTH/2,VIEW_HEIGHT/2+30,this));
 
+    li.push_back(new Ecoli(50,150,this));
+    
     li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
-    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
-    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
-    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
-    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+
 
 
     return GWSTATUS_CONTINUE_GAME;
@@ -133,9 +132,9 @@ bool StudentWorld::checkSocratesOverlap(double x, double y){
     return false;
 }
 
-bool StudentWorld::canBacteriaMoveForward(double x, double y, int dir){
-    x+=3*cos(dir*3.14159265/180);
-    y+=3*sin(dir*3.14159265/180);
+bool StudentWorld::canBacteriaMoveForward(double x, double y, int dir, int dist){
+    x+=dist*cos(dir*3.14159265/180);
+    y+=dist*sin(dir*3.14159265/180);
     double d = sqrt(((VIEW_WIDTH/2)-x)*((VIEW_WIDTH/2)-x)+((VIEW_HEIGHT/2)-y)*((VIEW_HEIGHT/2)-y));
     if(d>=VIEW_RADIUS){
         return false;

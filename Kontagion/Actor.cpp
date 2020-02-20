@@ -402,7 +402,7 @@ void Salmonella::MPdistOrGetFoodAngle(){
     
     if(getMpDist()>0){
         decMpDist();
-        if(getWorld()->canBacteriaMoveForward(getX(), getY(), getDirection())){
+        if(getWorld()->canBacteriaMoveForward(getX(), getY(), getDirection(), 3)){
             double x = getX()+ 3*cos(getDirection()*3.14159265/180);
             double y = getY()+ 3*sin(getDirection()*3.14159265/180);
             moveTo(x, y);
@@ -415,7 +415,7 @@ void Salmonella::MPdistOrGetFoodAngle(){
         int dir;
         if(getWorld()->getClosestFoodAngle(getX(), getY(), dir)){
             setDirection(dir);
-            if(getWorld()->canBacteriaMoveForward(getX(), getY(), dir)){
+            if(getWorld()->canBacteriaMoveForward(getX(), getY(), dir, 3)){
                 double x = getX()+ 3*cos(getDirection()*3.14159265/180);
                 double y = getY()+ 3*sin(getDirection()*3.14159265/180);
                 moveTo(x, y);
@@ -481,7 +481,7 @@ void AggressiveSalmonella::doSomething()
     double distance = getWorld()->getDistanceAndDirFromPlayer(getX(), getY(), dir);
     if(distance<=72){
         //move IN THE DIRECTION OF PLAYER
-        if(getWorld()->canBacteriaMoveForward(getX(), getY(), dir)){
+        if(getWorld()->canBacteriaMoveForward(getX(), getY(), dir, 3)){
             //if it can move forward, move forward
             setDirection(dir);
             double x = getX()+ 3*cos(getDirection()*3.14159265/180);
@@ -558,7 +558,71 @@ void AggressiveSalmonella::doSomething()
     MPdistOrGetFoodAngle();
 }
 
+//ECOLI
 
+Ecoli::Ecoli(int startX, int startY, StudentWorld* ptr)
+:Bacteria(IID_ECOLI, startX, startY, 90, 0, ptr, 5, 0)
+{
+    
+}
+
+void Ecoli::EcoliChasePlayer(double x, double y){
+    int dir;
+    double dist = getWorld()->getDistanceAndDirFromPlayer(x, y, dir);
+    if(dist<=256){
+        for(int i=0; i<10; i++){
+            if(getWorld()->canBacteriaMoveForward(x, y, dir, 2)){
+                setDirection(dir);
+                double x = getX()+ 2*cos(getDirection()*3.14159265/180);
+                double y = getY()+ 2*sin(getDirection()*3.14159265/180);
+                moveTo(x, y);
+                return;
+            }else{
+                dir+=10;
+            }
+        }
+    }
+}
+
+void Ecoli::doSomething(){
+    checkDead();
+    if(isDead()){
+        return;
+    }
+    
+    if(getWorld()->checkSocratesOverlap(getX(), getY())){
+        getWorld()->hurtPlayerHealth(4);
+        //skip to step 5
+        EcoliChasePlayer(getX(), getY());
+        return;
+    }
+    
+    if(getFoodCount() == 3){
+        double newx = getX();
+        double newy = getY();
+        if(getX()<VIEW_WIDTH/2){
+            newx = getX()+SPRITE_RADIUS;
+        }else if(getX()>VIEW_WIDTH/2){
+            newx = getX()-SPRITE_RADIUS;
+        }
+        if(getY()<VIEW_HEIGHT/2){
+            newy = getY()+SPRITE_RADIUS;
+        }else if(getY()>VIEW_HEIGHT/2){
+            newy = getY()-SPRITE_RADIUS;
+        }
+        getWorld()->addBacteria(new Ecoli(newx, newy, getWorld()));
+        resetFoodCount();
+        //skip to step 5
+        EcoliChasePlayer(getX(), getY());
+        return;
+    }
+    
+    if(getWorld()->checkFoodOverlap(getX(), getY())){
+        incFoodCount();
+    }
+    
+    EcoliChasePlayer(getX(), getY());
+}
 
 
 

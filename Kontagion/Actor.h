@@ -179,12 +179,13 @@ public:
 private:
 };
 
-//class Ecoli: public Bacteria
-//{
-//public:
-//    Ecoli();
-//    virtual void doSomething;
-//private:
-//}
+class Ecoli: public Bacteria
+{
+public:
+    Ecoli(int startX, int startY, StudentWorld* ptr);
+    virtual void doSomething();
+    void EcoliChasePlayer(double x, double y);
+private:
+};
 
 #endif // ACTOR_H_

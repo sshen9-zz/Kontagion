@@ -22,7 +22,7 @@ public:
     bool checkProjOverlap(double x, double y, int dmg);
     bool checkSocratesOverlap(double x, double y);
     bool checkFoodOverlap(double x, double y);
-    bool canBacteriaMoveForward(double x, double y, int dir);
+    bool canBacteriaMoveForward(double x, double y, int dir, int dist);
     void restorePlayerHealth();
     void hurtPlayerHealth(int num);
     void addPlayerFlame();

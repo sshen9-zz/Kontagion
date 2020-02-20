@@ -2,7 +2,6 @@
 #include "GameConstants.h"
 #include "Actor.h"
 #include <string>
-#include <math.h>
 using namespace std;
 
 GameWorld* createStudentWorld(string assetPath)
@@ -31,42 +30,64 @@ int StudentWorld::init()
         li.push_back(new Dirt(x, y, this));
     }
     
-    for(int i=0; i<10; i++){
-        double a = randInt(0, 359);
-        double r = 120*sqrt(randInt(0, 10000)/10000.0);
-        double x = r*cos(a*3.14159265/180)+128;
-        double y = r*sin(a*3.14159265/180)+128;
-        li.push_back(new Food(x, y, this));
-    }
+//    for(int i=0; i<30; i++){
+//        double a = randInt(0, 359);
+//        double r = 120*sqrt(randInt(0, 10000)/10000.0);
+//        double x = r*cos(a*3.14159265/180)+128;
+//        double y = r*sin(a*3.14159265/180)+128;
+//        li.push_back(new Food(x, y, this));
+//    }
 
 //    li.push_back(new RestoreHealth(VIEW_WIDTH/2-50, VIEW_HEIGHT/2-50, this));
-////    li.push_back(new Food(50,100,this));
 //    li.push_back(new Food(180,VIEW_HEIGHT/2,this));
 //    li.push_back(new Food(VIEW_WIDTH/2 + (VIEW_RADIUS),VIEW_HEIGHT/2,this));
 
-    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
-    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
-    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
-    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
-    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
-    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
-    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
-    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
-    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
-    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
-    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
-    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
-    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
-    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
-    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
-    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
-    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
-    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
-    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
-    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
-    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
-    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
-    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
+//    li.push_back(new Salmonella(VIEW_WIDTH/2-60,VIEW_HEIGHT/2,this));
 
     return GWSTATUS_CONTINUE_GAME;
 }
@@ -75,8 +96,9 @@ int StudentWorld::move()
 {
     // This code is here merely to allow the game to build, run, and terminate after you hit enter.
     // Notice that the return value GWSTATUS_PLAYER_DIED will cause our framework to end the current level.
-    m_playerPtr->doSomething();
-
+    if(!m_playerPtr->isDead()){
+        m_playerPtr->doSomething();
+    }
     list<Actor*>::iterator it = li.begin();
     while(it!=li.end()){
         if(!(*it)->isDead()){
@@ -90,10 +112,7 @@ int StudentWorld::move()
     while(it!=li.end()){
         if((*it)->isDead()){
             delete (*it);
-            //delete the actor and replace pointer with last pointer
-            (*it) = li.back();
-            li.pop_back();
-            it--;
+            li.erase(it);
         }
         it++;
     }
@@ -207,6 +226,7 @@ void StudentWorld::restorePlayerHealth(){
 void StudentWorld::hurtPlayerHealth(int num)
 {
     m_playerPtr->setHP(m_playerPtr->getHP()-num);
+    cout<<m_playerPtr->getHP()<<endl;
 }
 
 void StudentWorld::addSpray(double x, double y, int dir)
@@ -245,5 +265,5 @@ void StudentWorld::cleanUp()
 }
 
 StudentWorld::~StudentWorld(){
-    ;
+    cleanUp();
 }

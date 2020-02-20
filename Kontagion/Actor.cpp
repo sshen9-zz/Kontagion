@@ -441,7 +441,6 @@ void Salmonella::doSomething(){
         int dir;
         if(getWorld()->getClosestFoodAngle(getX(), getY(), dir)){
             setDirection(dir);
-            std::cout<<dir<<std::endl;
             if(getWorld()->canBacteriaMoveForward(getX(), getY(), dir)){
                 double x = getX()+ 3*cos(getDirection()*3.14159265/180);
                 double y = getY()+ 3*sin(getDirection()*3.14159265/180);

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>logFormatVersion</key>
+	<integer>10</integer>
+	<key>logs</key>
+	<dict>
+		<key>15B32827-E0E3-4FE0-80AF-50E6F61465B6</key>
+		<dict>
+			<key>className</key>
+			<string>DBGConsoleLog</string>
+			<key>documentTypeString</key>
+			<string>com.apple.dt.IDE.DebuggerLogContentType</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
+			<key>fileName</key>
+			<string>15B32827-E0E3-4FE0-80AF-50E6F61465B6.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Kontagion project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Kontagion</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Debug Kontagion</string>
+			<key>timeStartedRecording</key>
+			<real>603857792.14495897</real>
+			<key>timeStoppedRecording</key>
+			<real>603857819.65372002</real>
+			<key>title</key>
+			<string>Debug Kontagion</string>
+			<key>uniqueIdentifier</key>
+			<string>15B32827-E0E3-4FE0-80AF-50E6F61465B6</string>
+		</dict>
+		<key>2ABE335B-A758-4B81-8299-DF38D3155A77</key>
+		<dict>
+			<key>className</key>
+			<string>DBGConsoleLog</string>
+			<key>documentTypeString</key>
+			<string>com.apple.dt.IDE.DebuggerLogContentType</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
+			<key>fileName</key>
+			<string>2ABE335B-A758-4B81-8299-DF38D3155A77.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Kontagion project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Kontagion</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Debug Kontagion</string>
+			<key>timeStartedRecording</key>
+			<real>603858548.89041901</real>
+			<key>timeStoppedRecording</key>
+			<real>603858559.36538601</real>
+			<key>title</key>
+			<string>Debug Kontagion</string>
+			<key>uniqueIdentifier</key>
+			<string>2ABE335B-A758-4B81-8299-DF38D3155A77</string>
+		</dict>
+		<key>5C6C0CA5-02E6-468C-A938-7B1ACCC438E9</key>
+		<dict>
+			<key>className</key>
+			<string>DBGConsoleLog</string>
+			<key>documentTypeString</key>
+			<string>com.apple.dt.IDE.DebuggerLogContentType</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
+			<key>fileName</key>
+			<string>5C6C0CA5-02E6-468C-A938-7B1ACCC438E9.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Kontagion project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Kontagion</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Debug Kontagion</string>
+			<key>timeStartedRecording</key>
+			<real>603856744.906582</real>
+			<key>timeStoppedRecording</key>
+			<real>603856763.439273</real>
+			<key>title</key>
+			<string>Debug Kontagion</string>
+			<key>uniqueIdentifier</key>
+			<string>5C6C0CA5-02E6-468C-A938-7B1ACCC438E9</string>
+		</dict>
+		<key>7995EDD5-CE2D-4F74-8D36-E1BCEB528083</key>
+		<dict>
+			<key>className</key>
+			<string>DBGConsoleLog</string>
+			<key>documentTypeString</key>
+			<string>com.apple.dt.IDE.DebuggerLogContentType</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
+			<key>fileName</key>
+			<string>7995EDD5-CE2D-4F74-8D36-E1BCEB528083.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Kontagion project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Kontagion</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Debug Kontagion</string>
+			<key>timeStartedRecording</key>
+			<real>603858058.12832201</real>
+			<key>timeStoppedRecording</key>
+			<real>603858088.04442298</real>
+			<key>title</key>
+			<string>Debug Kontagion</string>
+			<key>uniqueIdentifier</key>
+			<string>7995EDD5-CE2D-4F74-8D36-E1BCEB528083</string>
+		</dict>
+		<key>9B6ECD56-DD7D-4C54-BDCC-95F61B02B4D9</key>
+		<dict>
+			<key>className</key>
+			<string>DBGConsoleLog</string>
+			<key>documentTypeString</key>
+			<string>com.apple.dt.IDE.DebuggerLogContentType</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
+			<key>fileName</key>
+			<string>9B6ECD56-DD7D-4C54-BDCC-95F61B02B4D9.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Kontagion project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Kontagion</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Debug Kontagion</string>
+			<key>timeStartedRecording</key>
+			<real>603857834.818681</real>
+			<key>timeStoppedRecording</key>
+			<real>603857836.12798095</real>
+			<key>title</key>
+			<string>Debug Kontagion</string>
+			<key>uniqueIdentifier</key>
+			<string>9B6ECD56-DD7D-4C54-BDCC-95F61B02B4D9</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

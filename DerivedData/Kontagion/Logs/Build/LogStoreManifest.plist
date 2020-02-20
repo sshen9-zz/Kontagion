@@ -6,7 +6,7 @@
 	<integer>10</integer>
 	<key>logs</key>
 	<dict>
-		<key>1B978DB5-DF11-49D8-8A80-B3F932688521</key>
+		<key>539C129E-7742-4216-9DE0-A1B4D5C9A0AE</key>
 		<dict>
 			<key>className</key>
 			<string>IDEActivityLogSection</string>
@@ -15,7 +15,7 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
 			<key>fileName</key>
-			<string>1B978DB5-DF11-49D8-8A80-B3F932688521.xcactivitylog</string>
+			<string>539C129E-7742-4216-9DE0-A1B4D5C9A0AE.xcactivitylog</string>
 			<key>hasPrimaryLog</key>
 			<true/>
 			<key>primaryObservable</key>
@@ -32,15 +32,15 @@
 			<key>signature</key>
 			<string>Build Kontagion</string>
 			<key>timeStartedRecording</key>
-			<real>603858054.58433604</real>
+			<real>603872944.36568606</real>
 			<key>timeStoppedRecording</key>
-			<real>603858058.124897</real>
+			<real>603872944.39080501</real>
 			<key>title</key>
 			<string>Build Kontagion</string>
 			<key>uniqueIdentifier</key>
-			<string>1B978DB5-DF11-49D8-8A80-B3F932688521</string>
+			<string>539C129E-7742-4216-9DE0-A1B4D5C9A0AE</string>
 		</dict>
-		<key>42DB4B9B-5A8F-41CD-BAB8-6785414FBED2</key>
+		<key>5D82582A-116D-4E06-83FD-BFD9A1BE99FE</key>
 		<dict>
 			<key>className</key>
 			<string>IDEActivityLogSection</string>
@@ -49,7 +49,7 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
 			<key>fileName</key>
-			<string>42DB4B9B-5A8F-41CD-BAB8-6785414FBED2.xcactivitylog</string>
+			<string>5D82582A-116D-4E06-83FD-BFD9A1BE99FE.xcactivitylog</string>
 			<key>hasPrimaryLog</key>
 			<true/>
 			<key>primaryObservable</key>
@@ -66,15 +66,15 @@
 			<key>signature</key>
 			<string>Build Kontagion</string>
 			<key>timeStartedRecording</key>
-			<real>603858548.85265398</real>
+			<real>603873011.88440299</real>
 			<key>timeStoppedRecording</key>
-			<real>603858548.88759196</real>
+			<real>603873013.02861297</real>
 			<key>title</key>
 			<string>Build Kontagion</string>
 			<key>uniqueIdentifier</key>
-			<string>42DB4B9B-5A8F-41CD-BAB8-6785414FBED2</string>
+			<string>5D82582A-116D-4E06-83FD-BFD9A1BE99FE</string>
 		</dict>
-		<key>810ABDA3-6756-4584-ACAF-DEE30394E033</key>
+		<key>7908C3CA-0705-4AC9-BFB0-04391D559C90</key>
 		<dict>
 			<key>className</key>
 			<string>IDEActivityLogSection</string>
@@ -83,7 +83,7 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
 			<key>fileName</key>
-			<string>810ABDA3-6756-4584-ACAF-DEE30394E033.xcactivitylog</string>
+			<string>7908C3CA-0705-4AC9-BFB0-04391D559C90.xcactivitylog</string>
 			<key>hasPrimaryLog</key>
 			<true/>
 			<key>primaryObservable</key>
@@ -100,15 +100,15 @@
 			<key>signature</key>
 			<string>Build Kontagion</string>
 			<key>timeStartedRecording</key>
-			<real>603856742.35021996</real>
+			<real>603873153.05153203</real>
 			<key>timeStoppedRecording</key>
-			<real>603856744.90283</real>
+			<real>603873154.48761201</real>
 			<key>title</key>
 			<string>Build Kontagion</string>
 			<key>uniqueIdentifier</key>
-			<string>810ABDA3-6756-4584-ACAF-DEE30394E033</string>
+			<string>7908C3CA-0705-4AC9-BFB0-04391D559C90</string>
 		</dict>
-		<key>938AD1ED-B4CC-4204-A48B-5F444430683C</key>
+		<key>916D711C-E87C-4C39-89D9-C2CC7F3A2B03</key>
 		<dict>
 			<key>className</key>
 			<string>IDEActivityLogSection</string>
@@ -117,7 +117,7 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
 			<key>fileName</key>
-			<string>938AD1ED-B4CC-4204-A48B-5F444430683C.xcactivitylog</string>
+			<string>916D711C-E87C-4C39-89D9-C2CC7F3A2B03.xcactivitylog</string>
 			<key>hasPrimaryLog</key>
 			<true/>
 			<key>primaryObservable</key>
@@ -134,15 +134,15 @@
 			<key>signature</key>
 			<string>Build Kontagion</string>
 			<key>timeStartedRecording</key>
-			<real>603857792.08500195</real>
+			<real>603866863.92260599</real>
 			<key>timeStoppedRecording</key>
-			<real>603857792.14079702</real>
+			<real>603866865.75910401</real>
 			<key>title</key>
 			<string>Build Kontagion</string>
 			<key>uniqueIdentifier</key>
-			<string>938AD1ED-B4CC-4204-A48B-5F444430683C</string>
+			<string>916D711C-E87C-4C39-89D9-C2CC7F3A2B03</string>
 		</dict>
-		<key>A8456B80-BAE9-4122-A6EC-A8D17EF711DF</key>
+		<key>AB093597-DB77-4144-90A5-F57C9AEE2120</key>
 		<dict>
 			<key>className</key>
 			<string>IDEActivityLogSection</string>
@@ -151,7 +151,7 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
 			<key>fileName</key>
-			<string>A8456B80-BAE9-4122-A6EC-A8D17EF711DF.xcactivitylog</string>
+			<string>AB093597-DB77-4144-90A5-F57C9AEE2120.xcactivitylog</string>
 			<key>hasPrimaryLog</key>
 			<true/>
 			<key>primaryObservable</key>
@@ -168,13 +168,183 @@
 			<key>signature</key>
 			<string>Build Kontagion</string>
 			<key>timeStartedRecording</key>
-			<real>603857833.80659401</real>
+			<real>603873655.10810101</real>
 			<key>timeStoppedRecording</key>
-			<real>603857834.81578898</real>
+			<real>603873657.19342697</real>
 			<key>title</key>
 			<string>Build Kontagion</string>
 			<key>uniqueIdentifier</key>
-			<string>A8456B80-BAE9-4122-A6EC-A8D17EF711DF</string>
+			<string>AB093597-DB77-4144-90A5-F57C9AEE2120</string>
+		</dict>
+		<key>BDD976FD-2141-435B-BDE8-17FD65D336DE</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>BDD976FD-2141-435B-BDE8-17FD65D336DE.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Kontagion project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Kontagion</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build Kontagion</string>
+			<key>timeStartedRecording</key>
+			<real>603872951.98598897</real>
+			<key>timeStoppedRecording</key>
+			<real>603872952.01227999</real>
+			<key>title</key>
+			<string>Build Kontagion</string>
+			<key>uniqueIdentifier</key>
+			<string>BDD976FD-2141-435B-BDE8-17FD65D336DE</string>
+		</dict>
+		<key>C18FCA80-36F6-4751-BE9B-A51C8255D530</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>C18FCA80-36F6-4751-BE9B-A51C8255D530.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Kontagion project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Kontagion</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build Kontagion</string>
+			<key>timeStartedRecording</key>
+			<real>603872560.43053305</real>
+			<key>timeStoppedRecording</key>
+			<real>603872562.571486</real>
+			<key>title</key>
+			<string>Build Kontagion</string>
+			<key>uniqueIdentifier</key>
+			<string>C18FCA80-36F6-4751-BE9B-A51C8255D530</string>
+		</dict>
+		<key>F0B664F0-87B4-4E58-B3AC-A65EA05F2564</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>F0B664F0-87B4-4E58-B3AC-A65EA05F2564.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Kontagion project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Kontagion</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build Kontagion</string>
+			<key>timeStartedRecording</key>
+			<real>603866319.27377701</real>
+			<key>timeStoppedRecording</key>
+			<real>603866320.34438205</real>
+			<key>title</key>
+			<string>Build Kontagion</string>
+			<key>uniqueIdentifier</key>
+			<string>F0B664F0-87B4-4E58-B3AC-A65EA05F2564</string>
+		</dict>
+		<key>F2C5CAAC-164A-47A2-B8E4-F252D308223F</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>F2C5CAAC-164A-47A2-B8E4-F252D308223F.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Kontagion project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Kontagion</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build Kontagion</string>
+			<key>timeStartedRecording</key>
+			<real>603872892.52894795</real>
+			<key>timeStoppedRecording</key>
+			<real>603872894.49420094</real>
+			<key>title</key>
+			<string>Build Kontagion</string>
+			<key>uniqueIdentifier</key>
+			<string>F2C5CAAC-164A-47A2-B8E4-F252D308223F</string>
+		</dict>
+		<key>FCDB7604-84B2-4096-8F09-85AD6BCFFFBB</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>FCDB7604-84B2-4096-8F09-85AD6BCFFFBB.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Kontagion project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Kontagion</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build Kontagion</string>
+			<key>timeStartedRecording</key>
+			<real>603872936.47196805</real>
+			<key>timeStoppedRecording</key>
+			<real>603872937.41470897</real>
+			<key>title</key>
+			<string>Build Kontagion</string>
+			<key>uniqueIdentifier</key>
+			<string>FCDB7604-84B2-4096-8F09-85AD6BCFFFBB</string>
 		</dict>
 	</dict>
 </dict>

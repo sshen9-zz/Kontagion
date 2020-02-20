@@ -28,6 +28,7 @@ public:
     void addPlayerFlame();
     bool getClosestFoodAngle(double x, double y, int& dir);
     void addBacteria(Actor* ptr);
+    double getDistanceAndDirFromPlayer(double x, double y, int& dir);
 private:
     Socrates* m_playerPtr;
     std::list<Actor*> li;

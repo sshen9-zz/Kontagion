@@ -31,8 +31,8 @@ class LivingActor: public Actor
 public:
     LivingActor(int imageID, int startX, int startY, Direction startDirection, int depth, StudentWorld* ptr, int hp);
     virtual bool hasHP();
-    virtual int getHP();
-    virtual void setHP(int num);
+    int getHP();
+    void setHP(int num);
     virtual void decHP(int dmg);
     void checkDead();
     
@@ -167,7 +167,24 @@ class Salmonella: public Bacteria
 public:
     Salmonella(int startX, int startY, StudentWorld* ptr);
     virtual void doSomething();
+    void MPdistOrGetFoodAngle();
 private:
 };
+
+class AggressiveSalmonella: public Salmonella
+{
+public:
+    AggressiveSalmonella(int startX, int startY, StudentWorld* ptr);
+    virtual void doSomething();
+private:
+};
+
+//class Ecoli: public Bacteria
+//{
+//public:
+//    Ecoli();
+//    virtual void doSomething;
+//private:
+//}
 
 #endif // ACTOR_H_

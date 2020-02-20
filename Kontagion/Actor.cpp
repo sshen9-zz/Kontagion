@@ -113,7 +113,7 @@ void LivingActor::decHP(int dmg){
 }
 
 Socrates::Socrates(StudentWorld* ptr)
-:LivingActor(IID_PLAYER, 0, 128, 0, 0, ptr, 100)
+:LivingActor(IID_PLAYER, 0, VIEW_HEIGHT/2, 0, 0, ptr, 100)
 {
     m_sprayCount = 20;
     m_flameCount = 5;
@@ -397,6 +397,42 @@ Salmonella::Salmonella(int startX, int startY, StudentWorld* ptr)
     
 }
 
+void Salmonella::MPdistOrGetFoodAngle(){
+    //FUNCTION TO HELP SIMPLY STEPS 6 AND 7 BECAUSE IT IS REPETITIVE
+    
+    if(getMpDist()>0){
+        decMpDist();
+        if(getWorld()->canBacteriaMoveForward(getX(), getY(), getDirection())){
+            double x = getX()+ 3*cos(getDirection()*3.14159265/180);
+            double y = getY()+ 3*sin(getDirection()*3.14159265/180);
+            moveTo(x, y);
+        }else{
+            setDirection(randInt(0, 359));
+            setMpDist();
+        }
+        return;
+    }else{
+        int dir;
+        if(getWorld()->getClosestFoodAngle(getX(), getY(), dir)){
+            setDirection(dir);
+            if(getWorld()->canBacteriaMoveForward(getX(), getY(), dir)){
+                double x = getX()+ 3*cos(getDirection()*3.14159265/180);
+                double y = getY()+ 3*sin(getDirection()*3.14159265/180);
+                moveTo(x, y);
+                return;
+            }else{
+                setDirection(randInt(0, 359));
+                setMpDist();
+                return;
+            }
+        }else{
+            setDirection(randInt(0, 359));
+            setMpDist();
+            return;
+        }
+    }
+}
+
 void Salmonella::doSomething(){
     checkDead();
     if(isDead()){
@@ -405,16 +441,16 @@ void Salmonella::doSomething(){
     if(getWorld()->checkSocratesOverlap(getX(), getY())){
         getWorld()->hurtPlayerHealth(1);
     }else if(getFoodCount()==3){
-        double newx;
-        double newy;
-        if(getX()<=VIEW_WIDTH/2){
+        double newx = getX();
+        double newy = getY();
+        if(getX()<VIEW_WIDTH/2){
             newx = getX()+SPRITE_RADIUS;
-        }else{
+        }else if(getX()>VIEW_WIDTH/2){
             newx = getX()-SPRITE_RADIUS;
         }
-        if(getY()<=VIEW_HEIGHT/2){
+        if(getY()<VIEW_HEIGHT/2){
             newy = getY()+SPRITE_RADIUS;
-        }else{
+        }else if(getY()>VIEW_HEIGHT/2){
             newy = getY()-SPRITE_RADIUS;
         }
         //add new salmonella at coordinate
@@ -424,36 +460,105 @@ void Salmonella::doSomething(){
         incFoodCount();
     }
     
-    if(getMpDist()>0){
-        decMpDist();
-        if(getWorld()->canBacteriaMoveForward(getX(), getY(), getDirection())){
+    MPdistOrGetFoodAngle();
+}
+
+AggressiveSalmonella::AggressiveSalmonella(int startX, int startY, StudentWorld* ptr)
+:Salmonella(startX, startY, ptr)
+{
+    //aggressive salmonella starts out with 10hp instead of 4
+    setHP(10);
+}
+
+void AggressiveSalmonella::doSomething()
+{
+    checkDead();
+    if(isDead()){
+        return;
+    }
+    
+    int dir;
+    double distance = getWorld()->getDistanceAndDirFromPlayer(getX(), getY(), dir);
+    if(distance<=72){
+        //move IN THE DIRECTION OF PLAYER
+        if(getWorld()->canBacteriaMoveForward(getX(), getY(), dir)){
+            //if it can move forward, move forward
+            setDirection(dir);
             double x = getX()+ 3*cos(getDirection()*3.14159265/180);
             double y = getY()+ 3*sin(getDirection()*3.14159265/180);
             moveTo(x, y);
-        }else{
-            int dir = randInt(0, 359);
-            setDirection(dir);
-            setMpDist();
+        }
+        if(getWorld()->checkSocratesOverlap(getX(), getY())){
+            getWorld()->hurtPlayerHealth(2);
+            return;
+        }
+        
+        //check if ate 3 food
+        if(getFoodCount() == 3){
+            double newx = getX();
+            double newy = getY();
+            if(getX()<VIEW_WIDTH/2){
+                newx = getX()+SPRITE_RADIUS;
+            }else if(getX()>VIEW_WIDTH/2){
+                newx = getX()-SPRITE_RADIUS;
+            }
+            if(getY()<VIEW_HEIGHT/2){
+                newy = getY()+SPRITE_RADIUS;
+            }else if(getY()>VIEW_HEIGHT/2){
+                newy = getY()-SPRITE_RADIUS;
+            }
+            getWorld()->addBacteria(new AggressiveSalmonella(newx, newy, getWorld()));
+            resetFoodCount();
+            return;
+        }
+        
+        //check food overlap
+        if(getWorld()->checkFoodOverlap(getX(), getY())){
+            incFoodCount();
         }
         return;
-    }else{
-        //get directional angle of closest food
-        int dir;
-        if(getWorld()->getClosestFoodAngle(getX(), getY(), dir)){
-            setDirection(dir);
-            if(getWorld()->canBacteriaMoveForward(getX(), getY(), dir)){
-                double x = getX()+ 3*cos(getDirection()*3.14159265/180);
-                double y = getY()+ 3*sin(getDirection()*3.14159265/180);
-                moveTo(x, y);
-            }else{
-                setDirection(randInt(0, 359));
-                setMpDist();
-            }
-        }else{
-            setDirection(randInt(0, 359));
-            setMpDist();
-        }
     }
+    
+    //DONE WITH 2
+    
+    //if distance is not less than 72:
+    
+    if(getWorld()->checkSocratesOverlap(getX(), getY())){
+        getWorld()->hurtPlayerHealth(2);
+        MPdistOrGetFoodAngle();
+    }
+    
+    //STEP 4
+    if(getFoodCount() == 3){
+        double newx = getX();
+        double newy = getY();
+        if(getX()<VIEW_WIDTH/2){
+            newx = getX()+SPRITE_RADIUS;
+        }else if(getX()>VIEW_WIDTH/2){
+            newx = getX()-SPRITE_RADIUS;
+        }
+        if(getY()<VIEW_HEIGHT/2){
+            newy = getY()+SPRITE_RADIUS;
+        }else if(getY()>VIEW_HEIGHT/2){
+            newy = getY()-SPRITE_RADIUS;
+        }
+        getWorld()->addBacteria(new AggressiveSalmonella(newx, newy, getWorld()));
+        resetFoodCount();
+        
+        //Then skip to step 6 (unless instructed not to by step 2c, in which case just return immediately).
+        MPdistOrGetFoodAngle();
+    }
+    
+    //STEP 5
+    if(getWorld()->checkFoodOverlap(getX(), getY())){
+        incFoodCount();
+    }
+    
+    //STEP 6
+    MPdistOrGetFoodAngle();
 }
+
+
+
 
 

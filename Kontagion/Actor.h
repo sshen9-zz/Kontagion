@@ -35,9 +35,9 @@ public:
     int getHP();
     void setHP(int num);
     virtual void decHP(int dmg);
-    void checkDead();
-    
 private:
+    virtual void playSoundHurt() = 0;
+    virtual void playSoundDie() = 0;
     int m_HP;
 };
 
@@ -49,6 +49,8 @@ public:
     virtual void doSomething();
     void addFlame();
 private:
+    virtual void playSoundHurt();
+    virtual void playSoundDie();
     int m_sprayCount;
     int m_flameCount;
 };
@@ -170,6 +172,8 @@ public:
     virtual void doSomething();
     void MPdistOrGetFoodAngle();
 private:
+    virtual void playSoundHurt();
+    virtual void playSoundDie();
 };
 
 class AggressiveSalmonella: public Salmonella
@@ -187,6 +191,8 @@ public:
     virtual void doSomething();
     void EcoliChasePlayer(double x, double y);
 private:
+    virtual void playSoundHurt();
+    virtual void playSoundDie();
 };
 
 class Pit: public Actor
@@ -195,6 +201,7 @@ public:
     Pit(int startX, int startY, StudentWorld* ptr);
     virtual void doSomething();
     virtual bool isPit();
+    virtual bool isDamagable();
     bool emittedAll();
     int getSalmonella();
     int getAggressiveSalmonella();

@@ -72,9 +72,8 @@ int StudentWorld::move()
 {
     // This code is here merely to allow the game to build, run, and terminate after you hit enter.
     // Notice that the return value GWSTATUS_PLAYER_DIED will cause our framework to end the current level.
-    if(!m_playerPtr->isDead()){
-        m_playerPtr->doSomething();
-    }
+    
+    m_playerPtr->doSomething();
     list<Actor*>::iterator it = li.begin();
     while(it!=li.end()){
         if(!(*it)->isDead()){
@@ -83,6 +82,26 @@ int StudentWorld::move()
         }
         it++;
     }
+    
+    if(m_playerPtr->isDead()){
+        return GWSTATUS_PLAYER_DIED;
+    }
+
+    //check if player cleared all bacteria and pits
+    bool flag = true;
+    it = li.begin();
+    while(it!=li.end()){
+        if((*it)->hasHP() || (*it)->isPit()){
+            flag = false;
+        }
+        it++;
+    }
+    
+    if(flag == true){
+        playSound(SOUND_FINISHED_LEVEL);
+        return GWSTATUS_FINISHED_LEVEL;
+    }
+    
     //delete dead actors
     it = li.begin();
     while(it!=li.end()){
@@ -92,7 +111,36 @@ int StudentWorld::move()
         }
         it++;
     }
-    decLives();
+    
+    //add new objects to game: goodie or fungus
+    int chancefungus = max(510 - getLevel() * 10, 200);
+    int n = randInt(0, chancefungus-1);
+    if(n == 0){
+        double a = randInt(0, 359);
+        double r = VIEW_RADIUS;
+        double x = r*cos(a*3.14159265/180)+128;
+        double y = r*sin(a*3.14159265/180)+128;
+        li.push_back(new Fungus(x, y, this));
+    }
+    
+    int chancegoodie = max(510 - getLevel() * 10, 250);
+    n = randInt(0, chancegoodie-1);
+    if(n == 0){
+        double a = randInt(0, 359);
+        double r = VIEW_RADIUS;
+        double x = r*cos(a*3.14159265/180)+128;
+        double y = r*sin(a*3.14159265/180)+128;
+        int num = randInt(1, 10);
+        if(num<=6){
+            li.push_back(new RestoreHealth(x, y, this));
+        }else if(num<=9){
+            li.push_back(new FlameGoodie(x, y, this));
+        }else{
+            li.push_back(new ExtraLifeGoodie(x, y, this));
+        }
+    }
+    //update status text
+    
     return GWSTATUS_CONTINUE_GAME;
 }
 
@@ -217,7 +265,7 @@ void StudentWorld::restorePlayerHealth(){
 
 void StudentWorld::hurtPlayerHealth(int num)
 {
-    m_playerPtr->setHP(m_playerPtr->getHP()-num);
+    m_playerPtr->decHP(num);
 }
 
 void StudentWorld::addSpray(double x, double y, int dir)
@@ -293,6 +341,7 @@ void StudentWorld::cleanUp()
     list<Actor*>::iterator it = li.begin();
     while(it!=li.end()){
         delete (*it);
+        li.erase(it);
         it++;
     }
 }

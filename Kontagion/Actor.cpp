@@ -106,14 +106,14 @@ void LivingActor::setHP(int num){
     m_HP = num;
 }
 
-void LivingActor::checkDead(){
-    if(m_HP<=0){
-        setDead();
-    }
-}
-
 void LivingActor::decHP(int dmg){
     m_HP-=dmg;
+    if(m_HP<=0){
+        setDead();
+        playSoundDie();
+    }else{
+        playSoundHurt();
+    }
 }
 
 Socrates::Socrates(StudentWorld* ptr)
@@ -124,7 +124,6 @@ Socrates::Socrates(StudentWorld* ptr)
 }
 
 void Socrates::doSomething(){
-    checkDead();
     if(isDead()){
         return;
     }
@@ -147,13 +146,15 @@ void Socrates::doSomething(){
                 if(m_flameCount>0){
                     //add 16 flame objects
                     getWorld()->addFlames(getX(), getY(), getDirection());
-                    m_flameCount-=1;
+                    getWorld()->playSound(SOUND_PLAYER_FIRE);
+//                    m_flameCount-=1;
                     //playsound
                 }
                 break;
             case KEY_PRESS_SPACE:
                 if(m_sprayCount>0){
                     getWorld()->addSpray(getX(), getY(), getDirection());
+                    getWorld()->playSound(SOUND_PLAYER_SPRAY);
                     m_sprayCount-=1;
                     //playsound
                 }
@@ -169,6 +170,14 @@ void Socrates::doSomething(){
 
 void Socrates::addFlame(){
     m_flameCount+=5;
+}
+
+void Socrates::playSoundHurt(){
+    getWorld()->playSound(SOUND_PLAYER_HURT);
+}
+
+void Socrates::playSoundDie(){
+    getWorld()->playSound(SOUND_PLAYER_DIE);
 }
 
 Socrates::~Socrates(){
@@ -267,10 +276,9 @@ void RestoreHealth::doSomething(){
     }
     
     if(getWorld()->checkSocratesOverlap(getX(), getY())){
-        //increase points by 250
         getWorld()->increaseScore(250);
         setDead();
-        //play sound
+        getWorld()->playSound(SOUND_GOT_GOODIE);
         //restore health
         getWorld()->restorePlayerHealth();
         return;
@@ -299,7 +307,7 @@ void FlameGoodie::doSomething(){
     if(getWorld()->checkSocratesOverlap(getX(), getY())){
         getWorld()->increaseScore(300);
         setDead();
-        //play sound
+        getWorld()->playSound(SOUND_GOT_GOODIE);
         getWorld()->addPlayerFlame();
         return;
     }
@@ -326,7 +334,7 @@ void ExtraLifeGoodie::doSomething(){
     if(getWorld()->checkSocratesOverlap(getX(), getY())){
         getWorld()->increaseScore(500);
         setDead();
-        //playsound
+        getWorld()->playSound(SOUND_GOT_GOODIE);
         getWorld()->incLives();
         return;
     }
@@ -335,7 +343,6 @@ void ExtraLifeGoodie::doSomething(){
     }
 
     decreaseLife();
-    return;
 }
 
 Fungus::Fungus(int startX, int startY, StudentWorld* ptr)
@@ -367,6 +374,7 @@ void Fungus::doSomething(){
 Bacteria::Bacteria(int imageID, int startX, int startY, Direction startDirection, int depth, StudentWorld* ptr, int hp, int mpDist)
 :LivingActor(imageID, startX, startY, startDirection, depth, ptr, hp)
 {
+    getWorld()->playSound(SOUND_BACTERIUM_BORN);
     m_foodCount = 0;
     m_mpDist = mpDist;
 }
@@ -399,6 +407,14 @@ Salmonella::Salmonella(int startX, int startY, StudentWorld* ptr)
 :Bacteria(IID_SALMONELLA, startX, startY, 90, 0, ptr, 4, 0)
 {
     
+}
+
+void Salmonella::playSoundHurt(){
+    getWorld()->playSound(SOUND_SALMONELLA_HURT);
+}
+
+void Salmonella::playSoundDie(){
+    getWorld()->playSound(SOUND_SALMONELLA_DIE);
 }
 
 void Salmonella::MPdistOrGetFoodAngle(){
@@ -438,7 +454,6 @@ void Salmonella::MPdistOrGetFoodAngle(){
 }
 
 void Salmonella::doSomething(){
-    checkDead();
     if(isDead()){
         return;
     }
@@ -476,7 +491,6 @@ AggressiveSalmonella::AggressiveSalmonella(int startX, int startY, StudentWorld*
 
 void AggressiveSalmonella::doSomething()
 {
-    checkDead();
     if(isDead()){
         return;
     }
@@ -570,6 +584,14 @@ Ecoli::Ecoli(int startX, int startY, StudentWorld* ptr)
     
 }
 
+void Ecoli::playSoundHurt(){
+    getWorld()->playSound(SOUND_ECOLI_HURT);
+}
+
+void Ecoli::playSoundDie(){
+    getWorld()->playSound(SOUND_ECOLI_DIE);
+}
+
 void Ecoli::EcoliChasePlayer(double x, double y){
     int dir;
     double dist = getWorld()->getDistanceAndDirFromPlayer(x, y, dir);
@@ -583,13 +605,15 @@ void Ecoli::EcoliChasePlayer(double x, double y){
                 return;
             }else{
                 dir+=10;
+                if(dir>=360){
+                    dir-=360;
+                }
             }
         }
     }
 }
 
 void Ecoli::doSomething(){
-    checkDead();
     if(isDead()){
         return;
     }
@@ -639,6 +663,10 @@ Pit::Pit(int startX, int startY, StudentWorld* ptr)
 
 bool Pit::isPit(){
     return true;
+}
+
+bool Pit::isDamagable(){
+    return false;
 }
 
 int Pit::getEcoli(){

@@ -109,11 +109,23 @@ void LivingActor::setHP(int num){
 void LivingActor::decHP(int dmg){
     m_HP-=dmg;
     if(m_HP<=0){
+        if(isPlayer()){
+            getWorld()->decLives();
+        }
+        turnIntoFood();
         setDead();
         playSoundDie();
     }else{
         playSoundHurt();
     }
+}
+
+void LivingActor::turnIntoFood(){
+    return;
+}
+
+bool LivingActor::isPlayer(){
+    return false;
 }
 
 Socrates::Socrates(StudentWorld* ptr)
@@ -123,6 +135,17 @@ Socrates::Socrates(StudentWorld* ptr)
     m_flameCount = 5;
 }
 
+int Socrates::getSprays(){
+    return m_sprayCount;
+}
+
+int Socrates::getFlames(){
+    return m_flameCount;
+}
+
+bool Socrates::isPlayer(){
+    return true;
+}
 void Socrates::doSomething(){
     if(isDead()){
         return;
@@ -403,6 +426,13 @@ void Bacteria::setMpDist(){
     m_mpDist = 10;
 }
 
+void Bacteria::turnIntoFood(){
+    int num = randInt(1, 2);
+    if(num == 1){
+        getWorld()->addActor(new Food(getX(), getY(), getWorld()));
+    }
+}
+
 Salmonella::Salmonella(int startX, int startY, StudentWorld* ptr)
 :Bacteria(IID_SALMONELLA, startX, startY, 90, 0, ptr, 4, 0)
 {
@@ -473,7 +503,7 @@ void Salmonella::doSomething(){
             newy = getY()-SPRITE_RADIUS;
         }
         //add new salmonella at coordinate
-        getWorld()->addBacteria(new Salmonella(newx, newy, getWorld()));
+        getWorld()->addActor(new Salmonella(newx, newy, getWorld()));
         resetFoodCount();
     }else if(getWorld()->checkFoodOverlap(getX(), getY())){
         incFoodCount();
@@ -525,7 +555,7 @@ void AggressiveSalmonella::doSomething()
             }else if(getY()>VIEW_HEIGHT/2){
                 newy = getY()-SPRITE_RADIUS;
             }
-            getWorld()->addBacteria(new AggressiveSalmonella(newx, newy, getWorld()));
+            getWorld()->addActor(new AggressiveSalmonella(newx, newy, getWorld()));
             resetFoodCount();
             return;
         }
@@ -560,7 +590,7 @@ void AggressiveSalmonella::doSomething()
         }else if(getY()>VIEW_HEIGHT/2){
             newy = getY()-SPRITE_RADIUS;
         }
-        getWorld()->addBacteria(new AggressiveSalmonella(newx, newy, getWorld()));
+        getWorld()->addActor(new AggressiveSalmonella(newx, newy, getWorld()));
         resetFoodCount();
         
         //Then skip to step 6 (unless instructed not to by step 2c, in which case just return immediately).
@@ -638,7 +668,7 @@ void Ecoli::doSomething(){
         }else if(getY()>VIEW_HEIGHT/2){
             newy = getY()-SPRITE_RADIUS;
         }
-        getWorld()->addBacteria(new Ecoli(newx, newy, getWorld()));
+        getWorld()->addActor(new Ecoli(newx, newy, getWorld()));
         resetFoodCount();
         //skip to step 5
         EcoliChasePlayer(getX(), getY());
@@ -718,19 +748,19 @@ void Pit::doSomething(){
                 int n = randInt(1, 3);
                 if(n == 1 && getEcoli()!=0){
                     //create new ecoli
-                    getWorld()->addBacteria(new Ecoli(getX(), getY(), getWorld()));
+                    getWorld()->addActor(new Ecoli(getX(), getY(), getWorld()));
                     decEcoli();
                     decSum();
                     return;
                 }else if(n==2 && getSalmonella()!=0){
                     //create salmonella
-                    getWorld()->addBacteria(new Salmonella(getX(), getY(), getWorld()));
+                    getWorld()->addActor(new Salmonella(getX(), getY(), getWorld()));
                     decSalmonella();
                     decSum();
                     return;
                 }else if(n==3 && getAggressiveSalmonella()!=0){
                     //create aggressive
-                    getWorld()->addBacteria(new AggressiveSalmonella(getX(), getY(), getWorld()));
+                    getWorld()->addActor(new AggressiveSalmonella(getX(), getY(), getWorld()));
                     decAggressiveSalmonella();
                     decSum();
                     return;

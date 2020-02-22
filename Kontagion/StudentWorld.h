@@ -27,7 +27,7 @@ public:
     void hurtPlayerHealth(int num);
     void addPlayerFlame();
     bool getClosestFoodAngle(double x, double y, int& dir);
-    void addBacteria(Actor* ptr);
+    void addActor(Actor* ptr);
     double getDistanceAndDirFromPlayer(double x, double y, int& dir);
 private:
     bool checkCreateDirtOverlap(double x, double y);

@@ -35,7 +35,9 @@ public:
     int getHP();
     void setHP(int num);
     virtual void decHP(int dmg);
+    virtual bool isPlayer();
 private:
+    virtual void turnIntoFood();
     virtual void playSoundHurt() = 0;
     virtual void playSoundDie() = 0;
     int m_HP;
@@ -48,6 +50,9 @@ public:
     virtual ~Socrates();
     virtual void doSomething();
     void addFlame();
+    int getSprays();
+    int getFlames();
+    virtual bool isPlayer();
 private:
     virtual void playSoundHurt();
     virtual void playSoundDie();
@@ -161,6 +166,7 @@ public:
     void decMpDist();
     void setMpDist();
 private:
+    virtual void turnIntoFood();
     int m_foodCount;
     int m_mpDist;
 };

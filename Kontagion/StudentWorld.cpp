@@ -139,7 +139,31 @@ int StudentWorld::move()
             li.push_back(new ExtraLifeGoodie(x, y, this));
         }
     }
+    
     //update status text
+    
+    string score = to_string(getScore());
+    bool addNegative = false;
+    if(getScore()<0){
+        addNegative = true;
+        score = to_string(-1*getScore());
+    }
+
+    string level = to_string(getLevel());
+    string lives = to_string(getLives());
+    string health = to_string(m_playerPtr->getHP());
+    string sprays = to_string(m_playerPtr->getSprays());
+    string flames = to_string(m_playerPtr->getFlames());
+    while(score.size()<6){
+        score = "0"+score;
+    }
+    if(addNegative){
+        score = score.erase(0,1);
+        score = "-"+score;
+    }
+    
+    string header = "Score: "+score+"  "+"Level: "+level+"  "+"Lives: "+lives+"  "+"Health: "+health+"  "+"Sprays: "+sprays+"  "+"Flames: "+flames;
+    setGameStatText(header);
     
     return GWSTATUS_CONTINUE_GAME;
 }
@@ -289,7 +313,7 @@ void StudentWorld::addPlayerFlame(){
     m_playerPtr->addFlame();
 }
 
-void StudentWorld::addBacteria(Actor* ptr){
+void StudentWorld::addActor(Actor* ptr){
     li.push_back(ptr);
 }
 
@@ -338,6 +362,7 @@ bool StudentWorld::checkCreateDirtOverlap(double x, double y){
 void StudentWorld::cleanUp()
 {
     delete m_playerPtr;
+    m_playerPtr = nullptr;
     list<Actor*>::iterator it = li.begin();
     while(it!=li.end()){
         delete (*it);

@@ -80,6 +80,10 @@ Food::Food(int startX, int startY, StudentWorld* ptr)
 {
 }
 
+Food::~Food(){
+    ;
+}
+
 bool Food::isDamagable(){
     return false;
 }
@@ -126,6 +130,10 @@ void LivingActor::turnIntoFood(){
 
 bool LivingActor::isPlayer(){
     return false;
+}
+
+LivingActor::~LivingActor(){
+    ;
 }
 
 Socrates::Socrates(StudentWorld* ptr)
@@ -219,6 +227,10 @@ bool Projectile::isDamagable(){
     return false;
 }
 
+Projectile::~Projectile(){
+    ;
+}
+
 int Projectile::getDamage() const{
     return m_damage;
 }
@@ -260,6 +272,9 @@ Flame::Flame(int startX, int startY, Direction startDirection, StudentWorld* ptr
     
 }
 
+Flame::~Flame(){
+    ;
+}
 
 //SPRAY PROJECTILE
 Spray::Spray(int startX, int startY, Direction startDirection, StudentWorld* ptr)
@@ -268,12 +283,20 @@ Spray::Spray(int startX, int startY, Direction startDirection, StudentWorld* ptr
     
 }
 
+Spray::~Spray(){
+    ;
+}
+
 //GOODIES
 
 Goodie::Goodie(int imageID, int startX, int startY, StudentWorld* ptr)
 :Actor(imageID, startX, startY, 0, 1, ptr)
 {
     m_lifespan = std::max(rand()%(300-10*getWorld()->getLevel()), 50);
+}
+
+Goodie::~Goodie(){
+    ;
 }
 
 int Goodie::getLifespan(){
@@ -291,6 +314,10 @@ RestoreHealth::RestoreHealth(int startX, int startY, StudentWorld* ptr)
 :Goodie(IID_RESTORE_HEALTH_GOODIE, startX, startY, ptr)
 {
     
+}
+
+RestoreHealth::~RestoreHealth(){
+    ;
 }
 
 void RestoreHealth::doSomething(){
@@ -322,6 +349,10 @@ FlameGoodie::FlameGoodie(int startX, int startY, StudentWorld* ptr)
     
 }
 
+FlameGoodie::~FlameGoodie(){
+    ;
+}
+
 void FlameGoodie::doSomething(){
     if(isDead()){
         return;
@@ -350,6 +381,10 @@ ExtraLifeGoodie::ExtraLifeGoodie(int startX, int startY, StudentWorld* ptr)
 
 }
 
+ExtraLifeGoodie::~ExtraLifeGoodie(){
+    ;
+}
+
 void ExtraLifeGoodie::doSomething(){
     if(isDead()){
         return;
@@ -372,6 +407,10 @@ Fungus::Fungus(int startX, int startY, StudentWorld* ptr)
 :Goodie(IID_FUNGUS, startX, startY, ptr)
 {
     
+}
+
+Fungus::~Fungus(){
+    ;
 }
 
 void Fungus::doSomething(){
@@ -400,6 +439,10 @@ Bacteria::Bacteria(int imageID, int startX, int startY, Direction startDirection
     getWorld()->playSound(SOUND_BACTERIUM_BORN);
     m_foodCount = 0;
     m_mpDist = mpDist;
+}
+
+Bacteria::~Bacteria(){
+    ;
 }
 
 int Bacteria::getFoodCount(){
@@ -437,6 +480,10 @@ Salmonella::Salmonella(int startX, int startY, StudentWorld* ptr)
 :Bacteria(IID_SALMONELLA, startX, startY, 90, 0, ptr, 4, 0)
 {
     
+}
+
+Salmonella::~Salmonella(){
+    ;
 }
 
 void Salmonella::playSoundHurt(){
@@ -517,6 +564,10 @@ AggressiveSalmonella::AggressiveSalmonella(int startX, int startY, StudentWorld*
 {
     //aggressive salmonella starts out with 10hp instead of 4
     setHP(10);
+}
+
+AggressiveSalmonella::~AggressiveSalmonella(){
+    ;
 }
 
 void AggressiveSalmonella::doSomething()
@@ -614,6 +665,10 @@ Ecoli::Ecoli(int startX, int startY, StudentWorld* ptr)
     
 }
 
+Ecoli::~Ecoli(){
+    ;
+}
+
 void Ecoli::playSoundHurt(){
     getWorld()->playSound(SOUND_ECOLI_HURT);
 }
@@ -689,6 +744,10 @@ Pit::Pit(int startX, int startY, StudentWorld* ptr)
     m_SalmonellaLeft = 5;
     m_AggressiveSalmonellaLeft = 3;
     m_sumBacteria = 10;
+}
+
+Pit::~Pit(){
+    ;
 }
 
 bool Pit::isPit(){

@@ -31,15 +31,16 @@ class LivingActor: public Actor
 {
 public:
     LivingActor(int imageID, int startX, int startY, Direction startDirection, int depth, StudentWorld* ptr, int hp);
+    virtual ~LivingActor();
     virtual bool hasHP();
     int getHP();
     void setHP(int num);
     virtual void decHP(int dmg);
     virtual bool isPlayer();
-private:
     virtual void turnIntoFood();
     virtual void playSoundHurt() = 0;
     virtual void playSoundDie() = 0;
+private:
     int m_HP;
 };
 
@@ -76,6 +77,7 @@ public:
     Food(int startX, int startY, StudentWorld* ptr);
     virtual bool isDamagable();
     virtual bool isFood();
+    virtual ~Food();
 private:
 };
 
@@ -89,6 +91,7 @@ public:
     void increaseDist(int dist);
     virtual void doSomething();
     virtual bool isDamagable();
+    virtual ~Projectile();
 private:
     int m_damage;
     int m_maxTravel;
@@ -100,6 +103,7 @@ class Flame: public Projectile
 {
 public:
     Flame(int startX, int startY, Direction startDirection, StudentWorld* ptr);
+    virtual ~Flame();
 private:
 };
 
@@ -107,6 +111,7 @@ class Spray: public Projectile
 {
 public:
     Spray(int startX, int startY, Direction startDirection, StudentWorld* ptr);
+    virtual ~Spray();
 private:
 };
 
@@ -119,6 +124,7 @@ public:
     Goodie(int imageID, int startX, int startY, StudentWorld* ptr);
     int getLifespan();
     void decreaseLife();
+    virtual ~Goodie();
 private:
     int m_lifespan;
 };
@@ -128,6 +134,7 @@ class RestoreHealth: public Goodie
 public:
     RestoreHealth(int startX, int startY, StudentWorld* ptr);
     virtual void doSomething();
+    virtual ~RestoreHealth();
 private:
 };
 
@@ -136,6 +143,7 @@ class FlameGoodie: public Goodie
 public:
     FlameGoodie(int startX, int startY, StudentWorld* ptr);
     virtual void doSomething();
+    virtual ~FlameGoodie();
 private:
 };
 
@@ -144,6 +152,7 @@ class ExtraLifeGoodie: public Goodie
 public:
     ExtraLifeGoodie(int startX, int startY, StudentWorld* ptr);
     virtual void doSomething();
+    virtual ~ExtraLifeGoodie();
 private:
 };
 
@@ -152,6 +161,7 @@ class Fungus: public Goodie
 public:
     Fungus(int startX, int startY, StudentWorld* ptr);
     virtual void doSomething();
+    virtual ~Fungus();
 private:
 };
 
@@ -165,6 +175,7 @@ public:
     int getMpDist();
     void decMpDist();
     void setMpDist();
+    virtual ~Bacteria();
 private:
     virtual void turnIntoFood();
     int m_foodCount;
@@ -177,6 +188,7 @@ public:
     Salmonella(int startX, int startY, StudentWorld* ptr);
     virtual void doSomething();
     void MPdistOrGetFoodAngle();
+    virtual ~Salmonella();
 private:
     virtual void playSoundHurt();
     virtual void playSoundDie();
@@ -187,6 +199,7 @@ class AggressiveSalmonella: public Salmonella
 public:
     AggressiveSalmonella(int startX, int startY, StudentWorld* ptr);
     virtual void doSomething();
+    virtual ~AggressiveSalmonella();
 private:
 };
 
@@ -196,6 +209,7 @@ public:
     Ecoli(int startX, int startY, StudentWorld* ptr);
     virtual void doSomething();
     void EcoliChasePlayer(double x, double y);
+    virtual ~Ecoli();
 private:
     virtual void playSoundHurt();
     virtual void playSoundDie();
@@ -205,6 +219,7 @@ class Pit: public Actor
 {
 public:
     Pit(int startX, int startY, StudentWorld* ptr);
+    virtual ~Pit();
     virtual void doSomething();
     virtual bool isPit();
     virtual bool isDamagable();

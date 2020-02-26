@@ -112,9 +112,13 @@ void LivingActor::setHP(int num){
 
 void LivingActor::decHP(int dmg){
     m_HP-=dmg;
+    if(isDead()){
+        return;
+    }
     if(m_HP<=0){
         if(isPlayer()){
             getWorld()->decLives();
+            std::cout<<"DECREASED LIFE: life is now "<<getWorld()->getLives()<<std::endl;
         }
         turnIntoFood();
         setDead();

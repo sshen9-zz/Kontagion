@@ -181,7 +181,7 @@ void Socrates::doSomething(){
                     //add 16 flame objects
                     getWorld()->addFlames(getX(), getY(), getDirection());
                     getWorld()->playSound(SOUND_PLAYER_FIRE);
-//                    m_flameCount-=1;
+                    m_flameCount-=1;
                     //playsound
                 }
                 break;

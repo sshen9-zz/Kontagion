@@ -142,6 +142,40 @@
 			<key>uniqueIdentifier</key>
 			<string>22CFE79C-9F43-4F11-A213-F4BA90C9D050</string>
 		</dict>
+		<key>23A04CC7-470F-414E-AB28-00646714E439</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>23A04CC7-470F-414E-AB28-00646714E439.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Kontagion project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Kontagion</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build Kontagion</string>
+			<key>timeStartedRecording</key>
+			<real>604537984.60489595</real>
+			<key>timeStoppedRecording</key>
+			<real>604537985.68137896</real>
+			<key>title</key>
+			<string>Build Kontagion</string>
+			<key>uniqueIdentifier</key>
+			<string>23A04CC7-470F-414E-AB28-00646714E439</string>
+		</dict>
 		<key>2982C082-B41D-4C8B-82AD-CAFE80C88241</key>
 		<dict>
 			<key>className</key>

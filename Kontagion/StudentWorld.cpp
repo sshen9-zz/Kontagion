@@ -20,7 +20,6 @@ int StudentWorld::init()
 {
     m_playerPtr = new Socrates(this);
     
-    int count = 0;
     //initialize pits
     for(int i=0; i<getLevel(); i++){
         while(true){
@@ -30,15 +29,11 @@ int StudentWorld::init()
             double y = r*sin(a*3.14159265/180)+128;
             if(!checkPitOverlap(x, y)){
                 li.push_back(new Pit(x,y,this));
-                count+=1;
-                cout<<x<<","<<y<<endl;
                 break;
             }
         }
     }
     
-    int pitcount = 0;
-    cout<<"I pushed "+to_string(count)+" pits into the list"<<endl;
 
     
 //    initialize food
@@ -55,7 +50,7 @@ int StudentWorld::init()
             }
         }
     }
-    
+
 //    initialize dirt objects
     int numDirt = max(180-20*getLevel(), 20);
     for(int i=0; i<numDirt; i++){
@@ -71,17 +66,6 @@ int StudentWorld::init()
         }
     }
     
-    list<Actor*>::iterator i =li.begin();
-    while(i!=li.end()){
-        if((*i)->isPit()){
-            pitcount+=1;
-        }
-        i++;
-    }
-    
-    cout<<"There are "<<pitcount<<" pits in the list"<<endl;
-
-
     return GWSTATUS_CONTINUE_GAME;
 }
 
@@ -210,7 +194,6 @@ bool StudentWorld::checkCreateFoodOverlap(double x, double y){
             double yc = (*it)->getY();
             double dist = sqrt((xc-x)*(xc-x)+(yc-y)*(yc-y));
             if(dist<=SPRITE_RADIUS*2){
-                (*it)->setDead();
                 return true;
             }
         }

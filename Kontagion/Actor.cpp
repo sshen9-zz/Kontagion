@@ -111,14 +111,13 @@ void LivingActor::setHP(int num){
 }
 
 void LivingActor::decHP(int dmg){
-    m_HP-=dmg;
     if(isDead()){
         return;
     }
+    m_HP-=dmg;
     if(m_HP<=0){
         if(isPlayer()){
             getWorld()->decLives();
-            std::cout<<"DECREASED LIFE: life is now "<<getWorld()->getLives()<<std::endl;
         }
         turnIntoFood();
         setDead();
@@ -182,7 +181,7 @@ void Socrates::doSomething(){
                     //add 16 flame objects
                     getWorld()->addFlames(getX(), getY(), getDirection());
                     getWorld()->playSound(SOUND_PLAYER_FIRE);
-//                    m_flameCount-=1;
+                    m_flameCount-=1;
                     //playsound
                 }
                 break;

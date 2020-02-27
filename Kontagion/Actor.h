@@ -54,9 +54,9 @@ public:
     int getSprays();
     int getFlames();
     virtual bool isPlayer();
-private:
     virtual void playSoundHurt();
     virtual void playSoundDie();
+private:
     int m_sprayCount;
     int m_flameCount;
 };
@@ -176,8 +176,8 @@ public:
     void decMpDist();
     void setMpDist();
     virtual ~Bacteria();
-private:
     virtual void turnIntoFood();
+private:
     int m_foodCount;
     int m_mpDist;
 };
@@ -189,9 +189,9 @@ public:
     virtual void doSomething();
     void MPdistOrGetFoodAngle();
     virtual ~Salmonella();
-private:
     virtual void playSoundHurt();
     virtual void playSoundDie();
+private:
 };
 
 class AggressiveSalmonella: public Salmonella
@@ -210,9 +210,9 @@ public:
     virtual void doSomething();
     void EcoliChasePlayer(double x, double y);
     virtual ~Ecoli();
-private:
     virtual void playSoundHurt();
     virtual void playSoundDie();
+private:
 };
 
 class Pit: public Actor

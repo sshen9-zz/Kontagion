@@ -181,7 +181,7 @@ void Socrates::doSomething(){
                     //add 16 flame objects
                     getWorld()->addFlames(getX(), getY(), getDirection());
                     getWorld()->playSound(SOUND_PLAYER_FIRE);
-                    m_flameCount-=1;
+//                    m_flameCount-=1;
                     //playsound
                 }
                 break;
@@ -260,11 +260,14 @@ void Projectile::doSomething(){
         setDead();
         return;
     }
+    
+    if(getDist()>getMaxTravel()){
+        setDead();
+        return;
+    }
+    
     moveTo(getX()+x, getY()+y);
     increaseDist(SPRITE_RADIUS*2);
-    if(getDist()>=getMaxTravel()){
-        setDead();
-    }
     
 }
 
@@ -623,7 +626,6 @@ void AggressiveSalmonella::doSomething()
     
     //DONE WITH 2
     
-    //if distance is not less than 72:
     
     if(getWorld()->checkSocratesOverlap(getX(), getY())){
         getWorld()->hurtPlayerHealth(2);

@@ -10,6 +10,3 @@ Install Xcode if you don't already have it
 Clone this repository to a directory of your choice
 
 Open Kontagion.xcodeproj on xcode and run.
-
-### Notes
-Project 3 for CS32 Class at UCLA Here is the project specification.
